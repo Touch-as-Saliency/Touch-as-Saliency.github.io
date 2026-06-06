@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
   <link rel="stylesheet" href="./static/css/index.css">
+  <script defer src="./static/js/index.js"></script>
 </head>
 <body>
 
@@ -40,7 +41,7 @@
               </a>
             </span>
             <span class="link-block">
-              <a href="#" class="button is-dark is-rounded">
+              <a href="#interactive-videos" class="button is-dark is-rounded">
                 <span class="icon"><i class="fab fa-youtube"></i></span>
                 <span>Supplementary Video</span>
               </a>
@@ -117,6 +118,43 @@
     </div>
   </section>
 
+  <section class="section band" id="interactive-videos">
+    <div class="container is-max-widescreen">
+      <div class="video-panel" data-video-panel data-video-set="standard">
+        <div class="video-panel-header">
+          <h2 class="title is-3 section-title">RGB and Saliency Rollouts</h2>
+          <div class="select task-select">
+            <select data-task-selector aria-label="Task">
+              <option value="pick-place">Pick and Place</option>
+              <option value="open-drawer">Open Drawer</option>
+              <option value="flip-box">Flip Box</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="video-grid">
+          <div class="video-frame">
+            <div class="video-label">RGB</div>
+            <video data-rgb-video src="./static/videos/pick-place-rgb.mp4?v=h264" controls muted playsinline preload="metadata"></video>
+          </div>
+          <div class="video-frame">
+            <div class="video-label">Saliency</div>
+            <video data-saliency-video src="./static/videos/pick-place-saliency.mp4?v=h264" controls muted playsinline preload="metadata"></video>
+          </div>
+        </div>
+
+        <div class="video-controls">
+          <button class="button is-dark is-rounded video-play" data-video-play type="button" aria-label="Play or pause videos">
+            <span class="icon"><i class="fas fa-play"></i></span>
+          </button>
+          <input data-video-progress class="video-progress" type="range" min="0" max="1000" value="0" aria-label="Video progress">
+          <span class="video-time" data-video-time>0:00 / 0:00</span>
+        </div>
+        <p class="video-status" data-video-status hidden></p>
+      </div>
+    </div>
+  </section>
+
   <section class="section band">
     <div class="container is-max-widescreen">
       <h2 class="title is-3 section-title has-text-centered">RGB-S Architecture</h2>
@@ -173,6 +211,43 @@
           During evaluation, a fixed black mask is applied to task-relevant image regions after the highlighted interaction stage. RGB-S keeps tactile evidence spatially available through the saliency channel, helping the policy continue reasoning when RGB observations are compromised.
         </figcaption>
       </figure>
+    </div>
+  </section>
+
+  <section class="section band" id="occluded-rollouts">
+    <div class="container is-max-widescreen">
+      <div class="video-panel" data-video-panel data-video-set="occluded">
+        <div class="video-panel-header">
+          <h2 class="title is-3 section-title">Real World Rollouts with occlusions</h2>
+          <div class="select task-select">
+            <select data-task-selector aria-label="Occluded task">
+              <option value="pick-place">Pick and Place</option>
+              <option value="open-drawer">Open Drawer</option>
+              <option value="flip-box">Flip Box</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="video-grid">
+          <div class="video-frame">
+            <div class="video-label">RGB</div>
+            <video data-rgb-video src="./static/videos/occluded-pick-place-rgb.mp4?v=h264" controls muted playsinline preload="metadata"></video>
+          </div>
+          <div class="video-frame">
+            <div class="video-label">Saliency</div>
+            <video data-saliency-video src="./static/videos/occluded-pick-place-saliency.mp4?v=h264" controls muted playsinline preload="metadata"></video>
+          </div>
+        </div>
+
+        <div class="video-controls">
+          <button class="button is-dark is-rounded video-play" data-video-play type="button" aria-label="Play or pause occluded videos">
+            <span class="icon"><i class="fas fa-play"></i></span>
+          </button>
+          <input data-video-progress class="video-progress" type="range" min="0" max="1000" value="0" aria-label="Occluded video progress">
+          <span class="video-time" data-video-time>0:00 / 0:00</span>
+        </div>
+        <p class="video-status" data-video-status hidden></p>
+      </div>
     </div>
   </section>
 
@@ -276,6 +351,27 @@
           Fusion architecture details from the appendix: feature concatenation, late fusion, and intermediate fusion alternatives used in the ablation study.
         </figcaption>
       </figure>
+    </div>
+  </section>
+
+  <section class="section band" id="limitations-conclusion">
+    <div class="container is-max-desktop">
+      <div class="content abstract-content">
+        <h2 class="title is-3 section-title">Limitations</h2>
+        <p>
+          A limitation of our kinematic projection model is its limited expressivity in representing the full 3D contact location. In particular, contacts occurring on the side of the object facing away from the camera may still project onto the 2D foreground. This creates depth ambiguity: from a single 2D saliency map, the model cannot determine whether a contact lies on the front or rear surface of the object, nor can it precisely distinguish which front or rear tactile sensor is activated.
+        </p>
+        <p>
+          However, this ambiguity has little effect on overall performance across the tasks we evaluate, as reflected in the reported simulation and real-world success rates. We attribute this robustness to three factors. First, the policy has access to the 3D kinematic configuration of the robot fingers through proprioception, which provides information beyond the projected saliency map. Second, visual observations are aggregated from multiple camera viewpoints, reducing reliance on any single ambiguous projection. Third, our network is robust to contact offsets. As a result, the network is not required to infer the complete 3D contact state from a single 2D view alone, and the limited expressivity of the projection model does not significantly degrade performance.
+        </p>
+      </div>
+
+      <div class="content abstract-content conclusion-block">
+        <h2 class="title is-3 section-title">Conclusion</h2>
+        <p>
+          In this paper, we introduced RGB-S, a visuo-tactile framework that bridges cross-modal asymmetry by projecting tactile contacts onto the 2D image plane as force-modulated saliency maps. Coupled with a zero-initialized conditioning mechanism, RGB-S embeds explicit spatial priors directly into standard visual encoders while preserving the integrity of pretrained representations. Across simulation and real-world experiments, RGB-S improves vision-based imitation learning, especially under visual occlusion. These results show that representing touch as image-aligned saliency is a simple, policy-agnostic, and effective approach for improving robustness in contact-rich manipulation.
+        </p>
+      </div>
     </div>
   </section>
 </main>

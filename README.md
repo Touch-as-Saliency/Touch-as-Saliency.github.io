@@ -6,7 +6,9 @@ This repository contains the static project page for **RGB-S: Image-Aligned Tact
 
 - `index.html`: the homepage content and page sections.
 - `static/css/index.css`: custom page styling.
+- `static/js/index.js`: synchronized RGB/saliency video interaction.
 - `static/images/`: image assets referenced by the homepage.
+- `static/videos/`: video assets referenced by the homepage.
 - `paper_Inpaint_IL_CoRL_2026/`: local reference paper folder, ignored by git.
 - `video_materials/`: local staging folder for future video assets, ignored by git.
 
@@ -25,6 +27,28 @@ The homepage references PNG files exported from the paper's active `\includegrap
 - `static/images/rgb-s-fusion-ablation.png` from `images/ablation_arch.pdf`
 
 Do not commit the full reference paper folder or unsorted video material folder.
+
+## Homepage Videos
+
+The interactive rollout viewers use H.264 MP4 videos copied from the ignored `video_materials/` folder into deployable `static/videos/`.
+
+Standard rollouts from `video_materials/P1(1)/P1`:
+
+- `static/videos/pick-place-rgb.mp4`
+- `static/videos/pick-place-saliency.mp4`
+- `static/videos/open-drawer-rgb.mp4`
+- `static/videos/open-drawer-saliency.mp4`
+- `static/videos/flip-box-rgb.mp4`
+- `static/videos/flip-box-saliency.mp4`
+
+Real-world rollouts with occlusions from `video_materials/P9(1)/P9`:
+
+- `static/videos/occluded-pick-place-rgb.mp4`
+- `static/videos/occluded-pick-place-saliency.mp4`
+- `static/videos/occluded-open-drawer-rgb.mp4`
+- `static/videos/occluded-open-drawer-saliency.mp4`
+- `static/videos/occluded-flip-box-rgb.mp4`
+- `static/videos/occluded-flip-box-saliency.mp4`
 
 ## License
 

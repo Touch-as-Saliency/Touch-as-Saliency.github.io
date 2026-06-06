@@ -87,6 +87,10 @@ body {
   text-align: justify;
 }
 
+.conclusion-block {
+  margin-top: 2.5rem;
+}
+
 .figure-block {
   margin: 0 auto;
 }
@@ -204,6 +208,105 @@ body {
   font-weight: 800;
 }
 
+.video-panel {
+  background: #fff;
+  border: 1px solid #dce5ea;
+  border-radius: 8px;
+  box-shadow: 0 12px 30px rgba(23, 37, 46, 0.07);
+  padding: 1.25rem;
+}
+
+.video-panel-header {
+  align-items: center;
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.video-panel-header .section-title {
+  margin-bottom: 0;
+}
+
+.task-select select {
+  border-color: #bfd2dc;
+  border-radius: 8px;
+  color: #17252e;
+  font-weight: 700;
+}
+
+.video-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.video-frame {
+  background: #101820;
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+}
+
+.video-frame video {
+  aspect-ratio: 16 / 9;
+  display: block;
+  height: auto;
+  object-fit: contain;
+  width: 100%;
+}
+
+.video-label {
+  background: rgba(16, 24, 32, 0.78);
+  border-radius: 999px;
+  color: #fff;
+  font-size: 0.82rem;
+  font-weight: 800;
+  left: 0.75rem;
+  padding: 0.25rem 0.65rem;
+  position: absolute;
+  top: 0.75rem;
+  z-index: 1;
+}
+
+.video-controls {
+  align-items: center;
+  display: grid;
+  gap: 0.8rem;
+  grid-template-columns: auto 1fr auto;
+  margin-top: 1rem;
+}
+
+.video-play {
+  height: 2.5rem;
+  width: 2.5rem;
+}
+
+.video-progress {
+  accent-color: #28617a;
+  cursor: pointer;
+  width: 100%;
+}
+
+.video-time {
+  color: #40525b;
+  font-family: 'Google Sans', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  min-width: 6.5rem;
+  text-align: right;
+}
+
+.video-status {
+  background: #fff6e5;
+  border: 1px solid #f0c36d;
+  border-radius: 8px;
+  color: #6f4b00;
+  font-size: 0.95rem;
+  margin-top: 0.75rem;
+  padding: 0.65rem 0.8rem;
+}
+
 .footer {
   background: #eef4f8;
   color: #40525b;
@@ -219,6 +322,25 @@ body {
   }
 
   .abstract-content {
+    text-align: left;
+  }
+
+  .video-panel-header {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .video-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .video-controls {
+    grid-template-columns: auto 1fr;
+  }
+
+  .video-time {
+    grid-column: 1 / -1;
+    min-width: 0;
     text-align: left;
   }
 }
