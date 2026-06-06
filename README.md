@@ -7,18 +7,24 @@ This repository contains the static project page for **RGB-S: Image-Aligned Tact
 - `index.html`: the homepage content and page sections.
 - `static/css/index.css`: custom page styling.
 - `static/images/`: image assets referenced by the homepage.
+- `paper_Inpaint_IL_CoRL_2026/`: local reference paper folder, ignored by git.
+- `video_materials/`: local staging folder for future video assets, ignored by git.
 
 The page uses CDN-hosted dependencies for Bulma, Font Awesome, Academicons, and Google Fonts.
 
-## Required Images
+## Homepage Images
 
-The homepage currently references these image files:
+The homepage references PNG files exported from the paper's active `\includegraphics` PDF figures:
 
-- `static/images/rgb-s-teaser.jpg`
-- `static/images/rgb-s-arch.jpg`
-- `static/images/occlusion-results.jpg`
+- `static/images/rgb-s-teaser.png` from `images/teaser.pdf`
+- `static/images/rgb-s-architecture.png` from `images/pipeline.pdf`
+- `static/images/rgb-s-real-platform.png` from `images/real_platform.pdf`
+- `static/images/rgb-s-tasks.png` from `images/tasks.pdf`
+- `static/images/rgb-s-real-world-demo.png` from `images/demo.pdf`
+- `static/images/rgb-s-gradcam.png` from `images/viz.pdf`
+- `static/images/rgb-s-fusion-ablation.png` from `images/ablation_arch.pdf`
 
-Add those files to make the three image sections render correctly.
+Do not commit the full reference paper folder or unsorted video material folder.
 
 ## License
 

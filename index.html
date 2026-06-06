@@ -3,12 +3,11 @@
 <head>
   <meta charset="utf-8">
   <meta name="description" content="RGB-S: Image-Aligned Tactile Saliency for Robust Dexterous Manipulation">
-  <meta name="keywords" content="Visuo-Tactile Perception, Dexterous Manipulation, RGB-S">
+  <meta name="keywords" content="Visuo-Tactile Perception, Dexterous Manipulation, RGB-S, Imitation Learning">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>RGB-S: Image-Aligned Tactile Saliency for Robust Dexterous Manipulation</title>
 
   <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
-
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
@@ -16,43 +15,42 @@
 </head>
 <body>
 
-<section class="hero is-light">
+<section class="hero publication-header">
   <div class="hero-body">
     <div class="container is-max-desktop">
       <div class="columns is-centered">
         <div class="column has-text-centered">
-          <h1 class="title is-1 publication-title">RGB-S: Image-Aligned Tactile Saliency for Robust Dexterous Manipulation</h1>
-          
-          <div class="is-size-5 publication-authors">
+          <p class="eyebrow">Touch as Saliency</p>
+          <h1 class="title publication-title">RGB-S: Image-Aligned Tactile Saliency for Robust Dexterous Manipulation</h1>
+
+          <div class="publication-authors">
             <span class="author-block">Anonymous Author(s)</span>
           </div>
 
-          <div class="is-size-5 publication-venue">
+          <div class="publication-venue">
             Submitted to the 10th Conference on Robot Learning (CoRL 2026)<br>
             <i>Double-Blind Review - Do not distribute</i>
           </div>
 
-          <div class="column has-text-centered">
-            <div class="publication-links">
-              <span class="link-block">
-                <a href="#" class="button is-dark is-rounded">
-                  <span class="icon"><i class="fas fa-file-pdf"></i></span>
-                  <span>Paper (Anonymous)</span>
-                </a>
-              </span>
-              <span class="link-block">
-                <a href="#" class="button is-dark is-rounded">
-                  <span class="icon"><i class="fab fa-youtube"></i></span>
-                  <span>Supplementary Video</span>
-                </a>
-              </span>
-              <span class="link-block">
-                <a href="https://touch-as-saliency.github.io" class="button is-dark is-rounded">
-                  <span class="icon"><i class="fas fa-globe"></i></span>
-                  <span>Project Page (touch-as-saliency)</span>
-                </a>
-              </span>
-            </div>
+          <div class="publication-links">
+            <span class="link-block">
+              <a href="./RGB-S_paper_Anonymous.pdf" class="button is-dark is-rounded">
+                <span class="icon"><i class="fas fa-file-pdf"></i></span>
+                <span>Paper</span>
+              </a>
+            </span>
+            <span class="link-block">
+              <a href="#" class="button is-dark is-rounded">
+                <span class="icon"><i class="fab fa-youtube"></i></span>
+                <span>Supplementary Video</span>
+              </a>
+            </span>
+            <span class="link-block">
+              <a href="https://touch-as-saliency.github.io" class="button is-dark is-rounded">
+                <span class="icon"><i class="fas fa-globe"></i></span>
+                <span>Project Page</span>
+              </a>
+            </span>
           </div>
         </div>
       </div>
@@ -60,71 +58,227 @@
   </div>
 </section>
 
-<section class="section">
-  <div class="container is-max-desktop">
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-full-width">
-        <img src="./static/images/rgb-s-teaser.jpg" alt="Overview of RGB-S Framework" class="teaser-image">
-        <h2 class="subtitle has-text-centered">
-          <strong>Overview of RGB-S.</strong> Unlike classical tactile-vision fusion that relies on implicit latent multimodal embeddings, our RGB-S paradigm explicitly projects tactile contacts onto image-space saliency maps. This produces a force-aware and spatially aligned representation for robust dexterous manipulation, even under severe occlusion.
-        </h2>
+<main>
+  <section class="section teaser-section">
+    <div class="container is-max-widescreen">
+      <figure class="figure-block">
+        <img src="./static/images/rgb-s-teaser.png" alt="Overview of the RGB-S tactile saliency paradigm">
+        <figcaption>
+          <strong>Overview of RGB-S.</strong>
+          Instead of treating tactile readings as isolated vectors, RGB-S projects physical contacts into the RGB image plane and renders them as force-aware saliency maps. This gives the policy spatially aligned touch cues when task-relevant visual evidence is hidden.
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="section band">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 section-title has-text-centered">Abstract</h2>
+      <div class="content abstract-content">
+        <p>
+          Effective visuo-tactile integration is critical for robotic dexterous manipulation, especially when visual observations are unreliable or occluded. However, robustly aligning sparse, heterogeneous tactile measurements with dense visual representations remains a fundamental challenge. Most existing approaches require policies to learn cross-modal correspondences implicitly from limited demonstrations, without leveraging geometric priors.
+        </p>
+        <p>
+          RGB-S explicitly grounds physical contacts in the image domain. Using robot forward kinematics and camera calibration, tactile sensor locations are projected onto the RGB image plane and rendered as force-modulated Gaussian saliency maps. These 2D spatial anchors are integrated through a zero-initialized conditioning architecture that preserves pretrained visual features while allowing the policy to learn from contact cues.
+        </p>
+        <p>
+          We evaluate RGB-S on six dexterous manipulation tasks in simulation and the real world under severe visual occlusions. Real-world experiments show that RGB-S improves occluded manipulation success rates by <strong>26.7 percentage points</strong> over the strongest implicit visuo-tactile baseline.
+        </p>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<section class="section" style="background-color: #f5f5f5;">
-  <div class="container is-max-desktop">
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-four-fifths">
-        <h2 class="title is-3 section-title">Abstract</h2>
-        <div class="content has-text-justified abstract-content">
-          <p>
-            Effective visuo-tactile integration is critical for robotic dexterous manipulation, especially when visual observations are unreliable or occluded. However, robustly aligning sparse, heterogeneous tactile measurements with dense visual representations remains a fundamental challenge. Most existing approaches require policies to learn cross-modal correspondences implicitly from limited demonstrations, without leveraging geometric priors. As a result, they are often data-inefficient and generalize poorly when visual observations are degraded.
-          </p>
-          <p>
-            To address this limitation, we propose <strong>RGB-S</strong>, a framework that explicitly grounds physical contacts in the image domain. Using robot forward kinematics and camera calibration, we project tactile sensor locations directly onto the RGB image plane. We then render force-modulated Gaussian saliency maps to model spatial uncertainty arising from kinematic and calibration errors. 
-          </p>
-          <p>
-            By integrating these 2D spatial anchors through a zero-initialized conditioning architecture, our method injects physical contact priors into standard visual backbones while preserving pre-trained visual representations. We evaluate our method on six dexterous manipulation tasks in both simulation and the real world under severe visual occlusions. Real-world experiments show that explicit RGB-S grounding in the image domain improves real-world occluded manipulation success rates by 26.7 percentage points over the strongest implicit visuo-tactile baseline, suggesting its improved spatial reasoning and robustness to occlusion.
-          </p>
+  <section class="section">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 section-title has-text-centered">Key Ideas</h2>
+      <div class="columns is-variable is-5">
+        <div class="column">
+          <div class="info-card">
+            <div class="card-icon"><i class="fas fa-project-diagram"></i></div>
+            <h3>Image-Aligned Touch</h3>
+            <p>Tactile nodes are localized with robot kinematics and projected through calibrated cameras into image coordinates.</p>
+          </div>
+        </div>
+        <div class="column">
+          <div class="info-card">
+            <div class="card-icon"><i class="fas fa-burn"></i></div>
+            <h3>Force-Aware Saliency</h3>
+            <p>Contacts become dense Gaussian saliency maps whose intensity reflects tactile force magnitude and uncertainty.</p>
+          </div>
+        </div>
+        <div class="column">
+          <div class="info-card">
+            <div class="card-icon"><i class="fas fa-network-wired"></i></div>
+            <h3>Lightweight Fusion</h3>
+            <p>A pretrained RGB encoder is expanded from 3 to 4 input channels, with the saliency channel initialized to zero.</p>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<section class="section">
-  <div class="container is-max-desktop">
-    <div class="columns is-centered">
-      <div class="column is-full-width">
-        <h2 class="title is-3 section-title has-text-centered">The RGB-S Architecture</h2>
-        <img src="./static/images/rgb-s-arch.jpg" alt="The RGB-S Architecture" class="teaser-image" style="margin-top: 1rem;">
-        <div class="content has-text-justified">
-          <p>
-            RGB-S extends a pretrained RGB visual encoder with a zero-initialized saliency channel. This design allows projected tactile cues (2D Tactile Saliency) to be fused directly in the image domain while preserving the original representation of the pretrained visual backbone (e.g., ResNet-18) at initialization. The encoded features are then compressed using a spatial softmax layer for downstream control.
-          </p>
+  <section class="section band">
+    <div class="container is-max-widescreen">
+      <h2 class="title is-3 section-title has-text-centered">RGB-S Architecture</h2>
+      <figure class="figure-block">
+        <img src="./static/images/rgb-s-architecture.png" alt="The RGB-S architecture">
+        <figcaption>
+          RGB-S concatenates an RGB image with a tactile saliency map, encodes the 4-channel observation with a shared ResNet-18 visual backbone, compresses features with spatial softmax, and passes the resulting condition to downstream imitation learning policies such as Diffusion Policy, ACT, or MLP behavior cloning.
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container is-max-widescreen">
+      <div class="columns is-vcentered is-variable is-6">
+        <div class="column is-6">
+          <h2 class="title is-3 section-title">Experimental Setup</h2>
+          <div class="content">
+            <p>
+              Real-world experiments use an xArm6 robot equipped with a LEAP Hand. The hand provides tactile readings from 12 joint-mounted FSR sensors and 4 fingertip TwinTac sensors, yielding 44 projected tactile nodes. Two calibrated RealSense D435 cameras provide RGB observations.
+            </p>
+            <p>
+              Policies are trained from normal, unobstructed demonstrations and evaluated under both normal and software-masked occluded observations.
+            </p>
+          </div>
+        </div>
+        <div class="column is-6">
+          <figure class="figure-block compact">
+            <img src="./static/images/rgb-s-real-platform.png" alt="Hardware setup and tactile sensing layout for RGB-S experiments">
+          </figure>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<section class="section">
-  <div class="container is-max-desktop">
-    <div class="columns is-centered">
-      <div class="column is-full-width">
-        <h2 class="title is-3 section-title has-text-centered">Robustness Under Visual Occlusion</h2>
-        <img src="./static/images/occlusion-results.jpg" alt="Real world experiments with severe occlusion masks" class="teaser-image" style="margin-top: 1rem;">
-        <div class="content has-text-justified">
-          <p>
-            We deploy the learned policies on an xArm6 equipped with a LEAP Hand. During evaluation, a software-defined black mask is applied to task-relevant regions. RGB-S maintains high robustness and effectively utilizes the explicitly grounded tactile cues to complete the task when vision is compromised, succeeding where implicit fusion baselines fail.
-          </p>
+  <section class="section band">
+    <div class="container is-max-widescreen">
+      <h2 class="title is-3 section-title has-text-centered">Simulation and Real-World Tasks</h2>
+      <figure class="figure-block">
+        <img src="./static/images/rgb-s-tasks.png" alt="Initialization workspaces for RGB-S simulation and real-world tasks">
+        <figcaption>
+          RGB-S is evaluated on six dexterous manipulation tasks: pick-and-place, cube-push, and rotate-cross in simulation; pick-and-place, open-drawer, and flip-box in the real world. Policies are trained with normal observations and evaluated under both normal and occluded settings.
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container is-max-widescreen">
+      <h2 class="title is-3 section-title has-text-centered">Robustness Under Visual Occlusion</h2>
+      <figure class="figure-block">
+        <img src="./static/images/rgb-s-real-world-demo.png" alt="Real-world RGB-S occlusion evaluation with saliency rendered">
+        <figcaption>
+          During evaluation, a fixed black mask is applied to task-relevant image regions after the highlighted interaction stage. RGB-S keeps tactile evidence spatially available through the saliency channel, helping the policy continue reasoning when RGB observations are compromised.
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="section results-section">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 section-title has-text-centered">Results Snapshot</h2>
+      <div class="columns is-variable is-4">
+        <div class="column">
+          <div class="metric-card">
+            <span class="metric-value">6</span>
+            <span class="metric-label">Dexterous tasks across simulation and real-world evaluation</span>
+          </div>
+        </div>
+        <div class="column">
+          <div class="metric-card">
+            <span class="metric-value">51.7%</span>
+            <span class="metric-label">Average real-world occluded success rate for RGB-S</span>
+          </div>
+        </div>
+        <div class="column">
+          <div class="metric-card">
+            <span class="metric-value">+26.7</span>
+            <span class="metric-label">Percentage-point gain over the strongest implicit tactile baseline under real occlusion</span>
+          </div>
         </div>
       </div>
+      <div class="result-table-wrapper">
+        <table class="table is-fullwidth is-hoverable result-table">
+          <thead>
+            <tr>
+              <th>Method</th>
+              <th>Normal Avg.</th>
+              <th>Occluded Avg.</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Vision-Only</td>
+              <td>56.7%</td>
+              <td>10.0%</td>
+            </tr>
+            <tr>
+              <td>Concat</td>
+              <td>55.0%</td>
+              <td>13.3%</td>
+            </tr>
+            <tr>
+              <td>Cross-Attn</td>
+              <td>30.0%</td>
+              <td>25.0%</td>
+            </tr>
+            <tr class="ours-row">
+              <td>Ours (RGB-S)</td>
+              <td>66.7%</td>
+              <td>51.7%</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
+
+  <section class="section band">
+    <div class="container is-max-widescreen">
+      <h2 class="title is-3 section-title has-text-centered">Attention Under Occlusion</h2>
+      <figure class="figure-block">
+        <img src="./static/images/rgb-s-gradcam.png" alt="Grad-CAM visualizations for RGB-S in simulation and real-world tasks">
+        <figcaption>
+          Grad-CAM visualizations show how policies attend to task-relevant regions under normal and occluded settings. Under occlusion, RGB-S continues to focus near contact-relevant hand and object regions, suggesting that projected tactile cues provide useful spatial grounding.
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 section-title has-text-centered">Design Ablations</h2>
+      <div class="columns is-variable is-5">
+        <div class="column">
+          <div class="info-card">
+            <h3>Rendering</h3>
+            <p>Force-aware RGB-S reaches 78.5% normal and 39.7% occluded success on simulated pick-and-place, outperforming vision-only, RGB overlay, and binary saliency variants.</p>
+          </div>
+        </div>
+        <div class="column">
+          <div class="info-card">
+            <h3>Alignment</h3>
+            <p>RGB-S is tolerant to moderate projection noise, but performance drops as tactile saliency becomes severely misaligned with the image.</p>
+          </div>
+        </div>
+        <div class="column">
+          <div class="info-card">
+            <h3>Fusion</h3>
+            <p>Early zero-initialized RGB-S fusion achieves stronger occluded performance than late or intermediate fusion alternatives.</p>
+          </div>
+        </div>
+      </div>
+      <figure class="figure-block compact">
+        <img src="./static/images/rgb-s-fusion-ablation.png" alt="Fusion architecture ablation details">
+        <figcaption>
+          Fusion architecture details from the appendix: feature concatenation, late fusion, and intermediate fusion alternatives used in the ablation study.
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+</main>
 
 <footer class="footer">
   <div class="container">
@@ -132,8 +286,8 @@
       <div class="column is-8">
         <div class="content has-text-centered">
           <p>
-            This website is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>. 
-            Template borrowed from <a href="https://github.com/nerfies/nerfies.github.io">Nerfies</a>.
+            This website is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
+            Template adapted from <a href="https://github.com/nerfies/nerfies.github.io">Nerfies</a>.
           </p>
         </div>
       </div>
