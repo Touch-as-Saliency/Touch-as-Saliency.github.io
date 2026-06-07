@@ -234,6 +234,132 @@ body {
   font-weight: 800;
 }
 
+.attention-panel {
+  --attention-card-width: 260px;
+  --attention-image-gap: 0.45rem;
+}
+
+.attention-domain {
+  background: #fff;
+  border: 1px solid #dce5ea;
+  border-radius: 8px;
+  box-shadow: 0 10px 28px rgba(23, 37, 46, 0.06);
+  padding: 1.1rem;
+}
+
+.attention-domain + .attention-domain {
+  margin-top: 1.5rem;
+}
+
+.attention-domain-header {
+  align-items: flex-start;
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.attention-domain-header h3 {
+  color: #17252e;
+  font-family: 'Google Sans', sans-serif;
+  font-size: 1.35rem;
+  font-weight: 800;
+  margin-bottom: 0.3rem;
+}
+
+.attention-domain-header p {
+  color: #40525b;
+  margin: 0;
+  max-width: 720px;
+}
+
+.attention-model-grid {
+  display: grid;
+  gap: 1rem;
+  justify-content: center;
+  overflow-x: auto;
+  padding-bottom: 0.25rem;
+}
+
+.attention-model-grid-sim {
+  grid-template-columns: repeat(3, var(--attention-card-width));
+}
+
+.attention-model-grid-real {
+  grid-template-columns: repeat(4, var(--attention-card-width));
+}
+
+.attention-model-card {
+  width: var(--attention-card-width);
+}
+
+.attention-model-card h4 {
+  color: #17252e;
+  font-family: 'Google Sans', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 800;
+  margin-bottom: 0.45rem;
+  text-align: center;
+}
+
+.attention-image-pair {
+  display: grid;
+  gap: var(--attention-image-gap);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.attention-image-frame {
+  margin: 0;
+}
+
+.attention-image-frame img,
+.attention-missing {
+  aspect-ratio: 4 / 3;
+  background: #101820;
+  border: 1px solid #dbe4e8;
+  border-radius: 6px;
+  display: block;
+  object-fit: contain;
+  width: 100%;
+}
+
+.attention-missing {
+  align-items: center;
+  color: #b8c5cc;
+  display: flex;
+  font-size: 0.78rem;
+  font-weight: 700;
+  justify-content: center;
+  text-align: center;
+}
+
+.attention-image-frame figcaption {
+  color: #52646d;
+  font-size: 0.78rem;
+  font-weight: 700;
+  margin-top: 0.25rem;
+  text-align: center;
+}
+
+.attention-colorbar {
+  margin: 1rem auto 0;
+  text-align: center;
+}
+
+.attention-colorbar img {
+  display: inline-block;
+  max-height: 28px;
+  max-width: 260px;
+  width: 100%;
+}
+
+.attention-colorbar figcaption {
+  color: #52646d;
+  font-size: 0.82rem;
+  font-weight: 700;
+  margin-top: 0.25rem;
+}
+
 .ablation-video-panel,
 .ablation-table-block {
   background: #fff;
@@ -449,6 +575,16 @@ body {
 
   .video-grid {
     grid-template-columns: 1fr;
+  }
+
+  .attention-domain-header {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .attention-model-grid-sim,
+  .attention-model-grid-real {
+    grid-template-columns: repeat(1, var(--attention-card-width));
   }
 
   .ablation-video-strip,

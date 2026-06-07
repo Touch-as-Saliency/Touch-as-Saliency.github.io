@@ -5,9 +5,14 @@
   <meta name="description" content="RGB-S: Image-Aligned Tactile Saliency for Robust Dexterous Manipulation">
   <meta name="keywords" content="Visuo-Tactile Perception, Dexterous Manipulation, RGB-S, Imitation Learning">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta property="og:image" content="https://touch-as-saliency.github.io/static/images/touch.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://touch-as-saliency.github.io/static/images/touch.png">
   <title>RGB-S: Image-Aligned Tactile Saliency for Robust Dexterous Manipulation</title>
 
   <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+  <link rel="icon" type="image/png" href="./static/images/touch.png">
+  <link rel="apple-touch-icon" href="./static/images/touch.png">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
@@ -308,12 +313,50 @@
   <section class="section band">
     <div class="container is-max-widescreen">
       <h2 class="title is-3 section-title has-text-centered">Attention Under normal and occluded scenes</h2>
-      <figure class="figure-block">
-        <img src="./static/images/rgb-s-gradcam.png" alt="Grad-CAM visualizations for RGB-S in simulation and real-world tasks">
-        <figcaption>
-          Grad-CAM visualizations show how policies attend to task-relevant regions under normal and occluded settings. Under occlusion, RGB-S continues to focus near contact-relevant hand and object regions, suggesting that projected tactile cues provide useful spatial grounding.
-        </figcaption>
-      </figure>
+
+      <div class="attention-panel">
+        <div class="attention-domain" data-attention-panel data-attention-domain="sim">
+          <div class="attention-domain-header">
+            <div>
+              <h3>Sim</h3>
+              <p>Six fusion methods are shown for each simulated scene, with normal observations on the left and occluded observations on the right.</p>
+            </div>
+            <div class="select task-select">
+              <select data-attention-scene aria-label="Simulation scene">
+                <option value="pap">Pick and Place</option>
+                <option value="rc">Rotate Cross</option>
+                <option value="pb">Cube Push</option>
+              </select>
+            </div>
+          </div>
+          <div class="attention-model-grid attention-model-grid-sim" data-attention-grid></div>
+          <figure class="attention-colorbar">
+            <img src="./static/images/grad_cam/color_bar.png" alt="Grad-CAM color scale for simulation attention maps">
+            <figcaption>Grad-CAM intensity scale</figcaption>
+          </figure>
+        </div>
+
+        <div class="attention-domain" data-attention-panel data-attention-domain="real">
+          <div class="attention-domain-header">
+            <div>
+              <h3>Real</h3>
+              <p>Four real-world fusion methods are shown for each scene, preserving the same single-image size as the simulation grid.</p>
+            </div>
+            <div class="select task-select">
+              <select data-attention-scene aria-label="Real-world scene">
+                <option value="pap">Pick and Place</option>
+                <option value="od">Open Drawer</option>
+                <option value="fb">Flip Box</option>
+              </select>
+            </div>
+          </div>
+          <div class="attention-model-grid attention-model-grid-real" data-attention-grid></div>
+          <figure class="attention-colorbar">
+            <img src="./static/images/grad_cam/color_bar.png" alt="Grad-CAM color scale for real-world attention maps">
+            <figcaption>Grad-CAM intensity scale</figcaption>
+          </figure>
+        </div>
+      </div>
     </div>
   </section>
 

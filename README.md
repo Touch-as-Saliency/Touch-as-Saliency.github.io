@@ -25,6 +25,9 @@ The homepage references PNG files exported from the paper's active `\includegrap
 - `static/images/rgb-s-real-world-demo.png` from `images/demo.pdf`
 - `static/images/rgb-s-gradcam.png` from `images/viz.pdf`
 - `static/images/rgb-s-fusion-ablation.png` from `images/ablation_arch.pdf`
+- `static/images/touch.png` from `video_materials/touch.png`, used as the page icon and preview thumbnail
+
+Grad-CAM attention visualizations are copied from `video_materials/grad_cam/grad_cam` into `static/images/grad_cam/`.
 
 Do not commit the full reference paper folder or unsorted video material folder.
 

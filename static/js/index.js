@@ -29,6 +29,53 @@ const VIDEO_SETS = {
   },
 };
 
+const ATTENTION_MODELS = {
+  sim: [
+    { id: 'vo', label: 'Vision-Only' },
+    { id: 'concat', label: 'Concat' },
+    { id: 'film', label: 'FiLM' },
+    { id: 'clip', label: 'CLIP' },
+    { id: 'ca', label: 'Cross-Attn' },
+    { id: 'rgbs', label: 'Ours (RGB-S)' },
+  ],
+  real: [
+    { id: 'vo', label: 'Vision-Only' },
+    { id: 'concat', label: 'Concat' },
+    { id: 'ca', label: 'Cross-Attn' },
+    { id: 'rgbs', label: 'Ours (RGB-S)' },
+  ],
+};
+
+const ATTENTION_EXTENSIONS = {
+  sim_pap_vo_nm: 'jpg',
+  sim_rc_vo_nm: 'jpg',
+  sim_rc_vo_occ: 'jpg',
+  sim_rc_concat_nm: 'jpg',
+  sim_rc_concat_occ: 'jpg',
+  sim_rc_film_nm: 'jpg',
+  sim_rc_film_occ: 'jpg',
+  sim_rc_clip_nm: 'jpg',
+  sim_rc_clip_occ: 'jpg',
+  sim_rc_ca_nm: 'jpg',
+  sim_rc_ca_occ: 'jpg',
+  sim_rc_rgbs_nm: 'jpg',
+  sim_rc_rgbs_occ: 'jpg',
+  real_pap_vo_nm: 'jpg',
+  real_pap_vo_occ: 'jpg',
+  real_pap_concat_nm: 'jpg',
+  real_pap_concat_occ: 'jpg',
+  real_pap_ca_nm: 'jpg',
+  real_pap_ca_occ: 'jpg',
+  real_pap_rgbs_nm: 'jpg',
+  real_pap_rgbs_occ: 'jpg',
+  real_od_vo_nm: 'jpg',
+};
+
+const ATTENTION_STATE_LABELS = {
+  nm: 'Normal',
+  occ: 'Occluded',
+};
+
 function formatTime(seconds) {
   if (!Number.isFinite(seconds)) {
     return '0:00';
@@ -346,7 +393,74 @@ function setupAblationPanel(panel) {
   updateProgress();
 }
 
+function attentionImagePath(domain, scene, model, state) {
+  const key = `${domain}_${scene}_${model}_${state}`;
+  const extension = ATTENTION_EXTENSIONS[key] === undefined ? 'png' : ATTENTION_EXTENSIONS[key];
+
+  if (extension === null) {
+    return null;
+  }
+
+  return `./static/images/grad_cam/${key}.${extension}`;
+}
+
+function createAttentionImage(domain, scene, model, state) {
+  const path = attentionImagePath(domain, scene, model.id, state);
+  const figure = document.createElement('figure');
+  figure.className = 'attention-image-frame';
+
+  if (path) {
+    const image = document.createElement('img');
+    image.src = path;
+    image.alt = `${domain} ${scene} ${model.label} ${ATTENTION_STATE_LABELS[state]} Grad-CAM`;
+    figure.appendChild(image);
+  } else {
+    const placeholder = document.createElement('div');
+    placeholder.className = 'attention-missing';
+    placeholder.textContent = 'Missing image';
+    figure.appendChild(placeholder);
+  }
+
+  const caption = document.createElement('figcaption');
+  caption.textContent = ATTENTION_STATE_LABELS[state];
+  figure.appendChild(caption);
+
+  return figure;
+}
+
+function renderAttentionPanel(panel) {
+  const domain = panel.dataset.attentionDomain;
+  const selector = panel.querySelector('[data-attention-scene]');
+  const grid = panel.querySelector('[data-attention-grid]');
+  const scene = selector.value;
+
+  grid.innerHTML = '';
+  ATTENTION_MODELS[domain].forEach((model) => {
+    const card = document.createElement('article');
+    card.className = 'attention-model-card';
+
+    const title = document.createElement('h4');
+    title.textContent = model.label;
+    card.appendChild(title);
+
+    const pair = document.createElement('div');
+    pair.className = 'attention-image-pair';
+    pair.appendChild(createAttentionImage(domain, scene, model, 'nm'));
+    pair.appendChild(createAttentionImage(domain, scene, model, 'occ'));
+    card.appendChild(pair);
+
+    grid.appendChild(card);
+  });
+}
+
+function setupAttentionPanel(panel) {
+  const selector = panel.querySelector('[data-attention-scene]');
+  selector.addEventListener('change', () => renderAttentionPanel(panel));
+  renderAttentionPanel(panel);
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('[data-video-panel]').forEach(setupVideoPanel);
   document.querySelectorAll('[data-ablation-panel]').forEach(setupAblationPanel);
+  document.querySelectorAll('[data-attention-panel]').forEach(setupAttentionPanel);
 });
