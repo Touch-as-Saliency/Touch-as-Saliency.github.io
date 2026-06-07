@@ -348,8 +348,8 @@ body {
 
 .attention-colorbar img {
   display: inline-block;
-  max-height: 28px;
-  max-width: 260px;
+  max-height: 44px;
+  max-width: 420px;
   width: 100%;
 }
 
