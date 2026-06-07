@@ -206,6 +206,147 @@ function setupVideoPanel(panel) {
   loadTask(selector.value);
 }
 
+function setupAblationPanel(panel) {
+  const videos = Array.from(panel.querySelectorAll('[data-ablation-video]'));
+  const leadVideo = videos[0];
+  const playButton = panel.querySelector('[data-ablation-play]');
+  const playIcon = playButton.querySelector('i');
+  const progress = panel.querySelector('[data-ablation-progress]');
+  const timeLabel = panel.querySelector('[data-ablation-time]');
+  const statusLabel = panel.querySelector('[data-ablation-status]');
+  let isDragging = false;
+  let isSyncing = false;
+
+  function duration() {
+    return Math.max(...videos.map((video) => video.duration || 0));
+  }
+
+  function syncTo(time) {
+    isSyncing = true;
+    videos.forEach((video) => {
+      if (Number.isFinite(video.duration)) {
+        video.currentTime = Math.min(time, video.duration);
+      }
+    });
+    isSyncing = false;
+  }
+
+  function updateProgress() {
+    const total = duration();
+    const current = leadVideo.currentTime || 0;
+
+    if (!isDragging && total > 0) {
+      progress.value = Math.round((current / total) * Number(progress.max));
+    }
+
+    timeLabel.textContent = `${formatTime(current)} / ${formatTime(total)}`;
+  }
+
+  function updatePlayState(isPlaying) {
+    playIcon.className = isPlaying ? 'fas fa-pause' : 'fas fa-play';
+  }
+
+  function setStatus(message) {
+    statusLabel.textContent = message;
+    statusLabel.hidden = !message;
+  }
+
+  function waitUntilReady(video) {
+    if (video.readyState >= 2) {
+      return Promise.resolve();
+    }
+
+    return new Promise((resolve, reject) => {
+      const cleanup = () => {
+        video.removeEventListener('canplay', handleCanPlay);
+        video.removeEventListener('error', handleError);
+      };
+      const handleCanPlay = () => {
+        cleanup();
+        resolve();
+      };
+      const handleError = () => {
+        cleanup();
+        reject(video.error || new Error('Video failed to load.'));
+      };
+
+      video.addEventListener('canplay', handleCanPlay, { once: true });
+      video.addEventListener('error', handleError, { once: true });
+      video.load();
+    });
+  }
+
+  async function playVideos() {
+    try {
+      setStatus('');
+      await Promise.all(videos.map(waitUntilReady));
+      syncTo(leadVideo.currentTime || 0);
+      await Promise.all(videos.map((video) => video.play()));
+      updatePlayState(true);
+    } catch (error) {
+      updatePlayState(false);
+      setStatus('Playback was blocked or this MP4 cannot be decoded by the browser. Try the native controls on the videos, or re-encode as H.264 MP4.');
+      console.error(error);
+    }
+  }
+
+  playButton.addEventListener('click', () => {
+    const shouldPlay = videos.every((video) => video.paused);
+
+    if (shouldPlay) {
+      playVideos();
+    } else {
+      videos.forEach((video) => video.pause());
+      updatePlayState(false);
+    }
+  });
+
+  progress.addEventListener('input', () => {
+    isDragging = true;
+    const total = duration();
+    if (total > 0) {
+      syncTo((Number(progress.value) / Number(progress.max)) * total);
+      updateProgress();
+    }
+  });
+
+  progress.addEventListener('change', () => {
+    isDragging = false;
+    updateProgress();
+  });
+
+  leadVideo.addEventListener('timeupdate', () => {
+    if (!isSyncing && !isDragging) {
+      videos.slice(1).forEach((video) => {
+        const drift = Math.abs((video.currentTime || 0) - leadVideo.currentTime);
+        if (drift > 0.12) {
+          video.currentTime = Math.min(leadVideo.currentTime, video.duration || leadVideo.currentTime);
+        }
+      });
+    }
+    updateProgress();
+  });
+
+  videos.forEach((video) => {
+    video.addEventListener('loadedmetadata', updateProgress);
+    video.addEventListener('pause', () => {
+      if (videos.every((item) => item.paused)) {
+        updatePlayState(false);
+      }
+    });
+  });
+
+  leadVideo.addEventListener('ended', () => {
+    videos.forEach((item) => item.pause());
+    updatePlayState(false);
+    syncTo(0);
+    updateProgress();
+  });
+
+  updateProgress();
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('[data-video-panel]').forEach(setupVideoPanel);
+  document.querySelectorAll('[data-ablation-panel]').forEach(setupAblationPanel);
 });

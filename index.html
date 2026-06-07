@@ -22,16 +22,11 @@
       <div class="columns is-centered">
         <div class="column has-text-centered">
           <p class="eyebrow">Touch as Saliency</p>
-          <h1 class="title publication-title">RGB-S: Image-Aligned Tactile Saliency for Robust Dexterous Manipulation</h1>
-
-          <div class="publication-authors">
-            <span class="author-block">Anonymous Author(s)</span>
-          </div>
-
-          <div class="publication-venue">
-            Submitted to the 10th Conference on Robot Learning (CoRL 2026)<br>
-            <i>Double-Blind Review - Do not distribute</i>
-          </div>
+          <h1 class="title publication-title">
+            <span class="title-r">R</span><span class="title-g">G</span><span class="title-b">B</span><span class="title-dash">-</span><span class="title-s">S</span>:
+            <span class="title-im">Im</span><span class="title-a">a</span><span class="title-ge">ge</span>-Aligned Tactile
+            <span class="title-s">Saliency</span> for Robust Dexterous Manipulation
+          </h1>
 
           <div class="publication-links">
             <span class="link-block">
@@ -72,23 +67,6 @@
     </div>
   </section>
 
-  <section class="section band">
-    <div class="container is-max-desktop">
-      <h2 class="title is-3 section-title has-text-centered">Abstract</h2>
-      <div class="content abstract-content">
-        <p>
-          Effective visuo-tactile integration is critical for robotic dexterous manipulation, especially when visual observations are unreliable or occluded. However, robustly aligning sparse, heterogeneous tactile measurements with dense visual representations remains a fundamental challenge. Most existing approaches require policies to learn cross-modal correspondences implicitly from limited demonstrations, without leveraging geometric priors.
-        </p>
-        <p>
-          RGB-S explicitly grounds physical contacts in the image domain. Using robot forward kinematics and camera calibration, tactile sensor locations are projected onto the RGB image plane and rendered as force-modulated Gaussian saliency maps. These 2D spatial anchors are integrated through a zero-initialized conditioning architecture that preserves pretrained visual features while allowing the policy to learn from contact cues.
-        </p>
-        <p>
-          We evaluate RGB-S on six dexterous manipulation tasks in simulation and the real world under severe visual occlusions. Real-world experiments show that RGB-S improves occluded manipulation success rates by <strong>26.7 percentage points</strong> over the strongest implicit visuo-tactile baseline.
-        </p>
-      </div>
-    </div>
-  </section>
-
   <section class="section">
     <div class="container is-max-desktop">
       <h2 class="title is-3 section-title has-text-centered">Key Ideas</h2>
@@ -114,6 +92,23 @@
             <p>A pretrained RGB encoder is expanded from 3 to 4 input channels, with the saliency channel initialized to zero.</p>
           </div>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section band">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 section-title has-text-centered">Abstract</h2>
+      <div class="content abstract-content">
+        <p>
+          Effective visuo-tactile integration is critical for robotic dexterous manipulation, especially when visual observations are unreliable or occluded. However, robustly aligning sparse, heterogeneous tactile measurements with dense visual representations remains a fundamental challenge. Most existing approaches require policies to learn cross-modal correspondences implicitly from limited demonstrations, without leveraging geometric priors.
+        </p>
+        <p>
+          RGB-S explicitly grounds physical contacts in the image domain. Using robot forward kinematics and camera calibration, tactile sensor locations are projected onto the RGB image plane and rendered as force-modulated Gaussian saliency maps. These 2D spatial anchors are integrated through a zero-initialized conditioning architecture that preserves pretrained visual features while allowing the policy to learn from contact cues.
+        </p>
+        <p>
+          We evaluate RGB-S on six dexterous manipulation tasks in simulation and the real world under severe visual occlusions. Real-world experiments show that RGB-S improves occluded manipulation success rates by <strong>26.7 percentage points</strong> over the strongest implicit visuo-tactile baseline.
+        </p>
       </div>
     </div>
   </section>
@@ -312,7 +307,7 @@
 
   <section class="section band">
     <div class="container is-max-widescreen">
-      <h2 class="title is-3 section-title has-text-centered">Attention Under Occlusion</h2>
+      <h2 class="title is-3 section-title has-text-centered">Attention Under normal and occluded scenes</h2>
       <figure class="figure-block">
         <img src="./static/images/rgb-s-gradcam.png" alt="Grad-CAM visualizations for RGB-S in simulation and real-world tasks">
         <figcaption>
@@ -325,55 +320,206 @@
   <section class="section">
     <div class="container is-max-desktop">
       <h2 class="title is-3 section-title has-text-centered">Design Ablations</h2>
-      <div class="columns is-variable is-5">
-        <div class="column">
-          <div class="info-card">
-            <h3>Rendering</h3>
-            <p>Force-aware RGB-S reaches 78.5% normal and 39.7% occluded success on simulated pick-and-place, outperforming vision-only, RGB overlay, and binary saliency variants.</p>
+
+      <div class="ablation-subsection">
+        <h3>Ablation on Tactile Saliency Rendering</h3>
+        <p>
+          Force-aware RGB-S reaches 78.5% normal and 39.7% occluded success on simulated pick-and-place, outperforming vision-only, RGB overlay, and binary saliency variants.
+        </p>
+        <div class="ablation-video-panel" data-ablation-panel>
+          <div class="ablation-video-strip">
+            <div class="ablation-video-item">
+              <div class="ablation-video-box">
+                <video data-ablation-video src="./static/videos/ablation-tinnpc.mp4?v=h264" muted playsinline preload="metadata"></video>
+              </div>
+              <h3>RGB Overlay</h3>
+            </div>
+
+            <div class="ablation-divider" aria-hidden="true"></div>
+
+            <div class="ablation-video-group">
+              <div class="ablation-video-pair">
+                <div class="ablation-video-box">
+                  <div class="video-label">RGB</div>
+                  <video data-ablation-video src="./static/videos/ablation-static-rgb.mp4?v=h264" muted playsinline preload="metadata"></video>
+                </div>
+                <div class="ablation-video-box">
+                  <div class="video-label">Saliency</div>
+                  <video data-ablation-video src="./static/videos/ablation-static-saliency.mp4?v=h264" muted playsinline preload="metadata"></video>
+                </div>
+              </div>
+              <h3>Binary RGB-S</h3>
+            </div>
+
+            <div class="ablation-divider" aria-hidden="true"></div>
+
+            <div class="ablation-video-group">
+              <div class="ablation-video-pair">
+                <div class="ablation-video-box">
+                  <div class="video-label">RGB</div>
+                  <video data-ablation-video src="./static/videos/ablation-dynamic-rgb.mp4?v=h264" muted playsinline preload="metadata"></video>
+                </div>
+                <div class="ablation-video-box">
+                  <div class="video-label">Saliency</div>
+                  <video data-ablation-video src="./static/videos/ablation-dynamic-saliency.mp4?v=h264" muted playsinline preload="metadata"></video>
+                </div>
+              </div>
+              <h3>Force-aware RGB-S</h3>
+            </div>
           </div>
-        </div>
-        <div class="column">
-          <div class="info-card">
-            <h3>Alignment</h3>
-            <p>RGB-S is tolerant to moderate projection noise, but performance drops as tactile saliency becomes severely misaligned with the image.</p>
+
+          <div class="video-controls">
+            <button class="button is-dark is-rounded video-play" data-ablation-play type="button" aria-label="Play or pause ablation videos">
+              <span class="icon"><i class="fas fa-play"></i></span>
+            </button>
+            <input data-ablation-progress class="video-progress" type="range" min="0" max="1000" value="0" aria-label="Ablation video progress">
+            <span class="video-time" data-ablation-time>0:00 / 0:00</span>
           </div>
+          <p class="video-status" data-ablation-status hidden></p>
         </div>
-        <div class="column">
-          <div class="info-card">
-            <h3>Fusion</h3>
-            <p>Early zero-initialized RGB-S fusion achieves stronger occluded performance than late or intermediate fusion alternatives.</p>
+
+        <div class="ablation-table-block">
+          <div class="result-table-wrapper">
+            <table class="table is-fullwidth is-hoverable result-table">
+              <thead>
+                <tr>
+                  <th>Variant</th>
+                  <th>Normal</th>
+                  <th>Occluded</th>
+                  <th>Average</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Vision-only</td>
+                  <td>71.9</td>
+                  <td>7.4</td>
+                  <td>39.7</td>
+                </tr>
+                <tr>
+                  <td>RGB Overlay</td>
+                  <td>65.3</td>
+                  <td>33.1</td>
+                  <td>49.2</td>
+                </tr>
+                <tr>
+                  <td>Binary RGB-S</td>
+                  <td>65.3</td>
+                  <td>27.3</td>
+                  <td>46.3</td>
+                </tr>
+                <tr class="ours-row">
+                  <td>Ours (Force-aware RGB-S)</td>
+                  <td>78.5</td>
+                  <td>39.7</td>
+                  <td>59.1</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
-      <figure class="figure-block compact">
-        <img src="./static/images/rgb-s-fusion-ablation.png" alt="Fusion architecture ablation details">
-        <figcaption>
-          Fusion architecture details from the appendix: feature concatenation, late fusion, and intermediate fusion alternatives used in the ablation study.
-        </figcaption>
-      </figure>
+
+      <div class="ablation-subsection">
+        <h3>Ablation on Spatial Misalignment</h3>
+        <p>
+          RGB-S is tolerant to moderate projection noise, but performance drops as tactile saliency becomes severely misaligned with the image.
+        </p>
+        <div class="ablation-table-block ablation-table-wide">
+          <div class="result-table-wrapper">
+            <table class="table is-fullwidth is-hoverable result-table">
+              <thead>
+                <tr>
+                  <th>Setting</th>
+                  <th>Condition</th>
+                  <th>0 px</th>
+                  <th>25 px</th>
+                  <th>50 px</th>
+                  <th>100 px</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td rowspan="2">Sim</td>
+                  <td>Normal</td>
+                  <td>78.5</td>
+                  <td>66.9</td>
+                  <td>70.2</td>
+                  <td>62.0</td>
+                </tr>
+                <tr>
+                  <td>Occ.</td>
+                  <td>39.7</td>
+                  <td>32.2</td>
+                  <td>24.0</td>
+                  <td>9.9</td>
+                </tr>
+                <tr>
+                  <td rowspan="2">Real</td>
+                  <td>Normal</td>
+                  <td>9/20</td>
+                  <td>8/20</td>
+                  <td>5/20</td>
+                  <td>5/20</td>
+                </tr>
+                <tr>
+                  <td>Occ.</td>
+                  <td>7/20</td>
+                  <td>4/20</td>
+                  <td>3/20</td>
+                  <td>3/20</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="ablation-subsection">
+        <h3>Ablation on Fusion Architecture</h3>
+        <p>
+          Early zero-initialized RGB-S fusion achieves stronger occluded performance than late or intermediate fusion alternatives.
+        </p>
+        <figure class="figure-block compact">
+          <img src="./static/images/rgb-s-fusion-ablation.png" alt="Fusion architecture ablation details">
+          <figcaption>
+            Fusion architecture details from the appendix: feature concatenation, late fusion, and intermediate fusion alternatives used in the ablation study.
+          </figcaption>
+        </figure>
+        <div class="ablation-table-block">
+          <div class="result-table-wrapper">
+            <table class="table is-fullwidth is-hoverable result-table">
+              <thead>
+                <tr>
+                  <th>Architecture</th>
+                  <th>Normal</th>
+                  <th>Occ.</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Late Fusion</td>
+                  <td>73.6</td>
+                  <td>35.5</td>
+                </tr>
+                <tr>
+                  <td>Intermediate</td>
+                  <td>73.6</td>
+                  <td>22.3</td>
+                </tr>
+                <tr class="ours-row">
+                  <td>Ours (Early)</td>
+                  <td>78.5</td>
+                  <td>39.7</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
-  <section class="section band" id="limitations-conclusion">
-    <div class="container is-max-desktop">
-      <div class="content abstract-content">
-        <h2 class="title is-3 section-title">Limitations</h2>
-        <p>
-          A limitation of our kinematic projection model is its limited expressivity in representing the full 3D contact location. In particular, contacts occurring on the side of the object facing away from the camera may still project onto the 2D foreground. This creates depth ambiguity: from a single 2D saliency map, the model cannot determine whether a contact lies on the front or rear surface of the object, nor can it precisely distinguish which front or rear tactile sensor is activated.
-        </p>
-        <p>
-          However, this ambiguity has little effect on overall performance across the tasks we evaluate, as reflected in the reported simulation and real-world success rates. We attribute this robustness to three factors. First, the policy has access to the 3D kinematic configuration of the robot fingers through proprioception, which provides information beyond the projected saliency map. Second, visual observations are aggregated from multiple camera viewpoints, reducing reliance on any single ambiguous projection. Third, our network is robust to contact offsets. As a result, the network is not required to infer the complete 3D contact state from a single 2D view alone, and the limited expressivity of the projection model does not significantly degrade performance.
-        </p>
-      </div>
-
-      <div class="content abstract-content conclusion-block">
-        <h2 class="title is-3 section-title">Conclusion</h2>
-        <p>
-          In this paper, we introduced RGB-S, a visuo-tactile framework that bridges cross-modal asymmetry by projecting tactile contacts onto the 2D image plane as force-modulated saliency maps. Coupled with a zero-initialized conditioning mechanism, RGB-S embeds explicit spatial priors directly into standard visual encoders while preserving the integrity of pretrained representations. Across simulation and real-world experiments, RGB-S improves vision-based imitation learning, especially under visual occlusion. These results show that representing touch as image-aligned saliency is a simple, policy-agnostic, and effective approach for improving robustness in contact-rich manipulation.
-        </p>
-      </div>
-    </div>
-  </section>
 </main>
 
 <footer class="footer">

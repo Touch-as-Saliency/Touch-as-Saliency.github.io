@@ -50,6 +50,14 @@ Real-world rollouts with occlusions from `video_materials/P9(1)/P9`:
 - `static/videos/occluded-flip-box-rgb.mp4`
 - `static/videos/occluded-flip-box-saliency.mp4`
 
+Ablation rollout comparison from `video_materials/P11(1)/P11_to`:
+
+- `static/videos/ablation-tinnpc.mp4`
+- `static/videos/ablation-static-rgb.mp4`
+- `static/videos/ablation-static-saliency.mp4`
+- `static/videos/ablation-dynamic-rgb.mp4`
+- `static/videos/ablation-dynamic-saliency.mp4`
+
 ## License
 
 This website is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License. The original template was borrowed from [Nerfies](https://github.com/nerfies/nerfies.github.io).

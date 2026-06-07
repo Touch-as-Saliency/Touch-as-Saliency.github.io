@@ -34,6 +34,32 @@ body {
   margin-bottom: 1rem;
 }
 
+.title-r {
+  color: #b51f1f;
+}
+
+.title-g,
+.title-a {
+  color: #1f7a34;
+}
+
+.title-b,
+.title-ge {
+  color: #2557b8;
+}
+
+.title-dash {
+  color: #7a7f85;
+}
+
+.title-s {
+  color: #c96b00;
+}
+
+.title-im {
+  color: #b83535;
+}
+
 .publication-authors {
   color: #33434c;
   font-size: 1.2rem;
@@ -81,14 +107,14 @@ body {
   padding-top: 2rem;
 }
 
+.teaser-section .figure-block figcaption {
+  max-width: 1120px;
+}
+
 .abstract-content {
   color: #2f3b42;
   font-size: 1.05rem;
   text-align: justify;
-}
-
-.conclusion-block {
-  margin-top: 2.5rem;
 }
 
 .figure-block {
@@ -208,6 +234,97 @@ body {
   font-weight: 800;
 }
 
+.ablation-video-panel,
+.ablation-table-block {
+  background: #fff;
+  border: 1px solid #dce5ea;
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.ablation-video-panel {
+  margin-bottom: 1.25rem;
+}
+
+.ablation-subsection {
+  margin-top: 2rem;
+}
+
+.ablation-subsection h3 {
+  color: #17252e;
+  font-family: 'Google Sans', sans-serif;
+  font-size: 1.35rem;
+  font-weight: 800;
+  margin-bottom: 0.6rem;
+}
+
+.ablation-subsection p {
+  color: #40525b;
+  margin-bottom: 1rem;
+}
+
+.ablation-subsection .figure-block {
+  margin-bottom: 1.25rem;
+}
+
+.ablation-video-strip {
+  align-items: start;
+  display: grid;
+  gap: 0.85rem;
+  grid-template-columns: minmax(120px, 1fr) auto minmax(240px, 2fr) auto minmax(240px, 2fr);
+}
+
+.ablation-video-item h3,
+.ablation-video-group h3,
+.ablation-table-block h3 {
+  color: #17252e;
+  font-family: 'Google Sans', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 800;
+  margin-bottom: 0.8rem;
+}
+
+.ablation-video-item h3,
+.ablation-video-group h3 {
+  font-size: 1.15rem;
+  margin: 0.7rem 0 0;
+  text-align: center;
+}
+
+.ablation-video-pair {
+  display: grid;
+  gap: 0.65rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.ablation-video-box {
+  background: #101820;
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+}
+
+.ablation-video-box video {
+  aspect-ratio: 4 / 3;
+  display: block;
+  object-fit: contain;
+  width: 100%;
+}
+
+.ablation-divider {
+  align-self: stretch;
+  border-left: 3px dashed #4775c7;
+  min-height: 100%;
+}
+
+.ablation-table-block .result-table-wrapper {
+  margin-top: 0;
+}
+
+.ablation-table-wide {
+  grid-column: 1 / -1;
+}
+
 .video-panel {
   background: #fff;
   border: 1px solid #dce5ea;
@@ -249,7 +366,7 @@ body {
 }
 
 .video-frame video {
-  aspect-ratio: 16 / 9;
+  aspect-ratio: 4 / 3;
   display: block;
   height: auto;
   object-fit: contain;
@@ -332,6 +449,17 @@ body {
 
   .video-grid {
     grid-template-columns: 1fr;
+  }
+
+  .ablation-video-strip,
+  .ablation-video-pair {
+    grid-template-columns: 1fr;
+  }
+
+  .ablation-divider {
+    border-left: 0;
+    border-top: 3px dashed #4775c7;
+    min-height: 0;
   }
 
   .video-controls {
