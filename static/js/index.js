@@ -36,13 +36,13 @@ const ATTENTION_MODELS = {
     { id: 'film', label: 'FiLM' },
     { id: 'clip', label: 'CLIP' },
     { id: 'ca', label: 'Cross-Attn' },
-    { id: 'rgbs', label: 'Ours (RGB-S)' },
+    { id: 'rgbs', label: 'Tac2Pix (Ours)' },
   ],
   real: [
     { id: 'vo', label: 'Vision-Only' },
     { id: 'concat', label: 'Concat' },
     { id: 'ca', label: 'Cross-Attn' },
-    { id: 'rgbs', label: 'Ours (RGB-S)' },
+    { id: 'rgbs', label: 'Tac2Pix (Ours)' },
   ],
 };
 
@@ -459,7 +459,52 @@ function setupAttentionPanel(panel) {
   renderAttentionPanel(panel);
 }
 
+function setupResultsTabs(container) {
+  const tabs = [...container.querySelectorAll('[role="tab"]')];
+  function activate(selected) {
+    tabs.forEach((tab) => {
+      const active = tab === selected;
+      tab.setAttribute('aria-selected', String(active));
+      tab.tabIndex = active ? 0 : -1;
+      document.getElementById(tab.getAttribute('aria-controls')).hidden = !active;
+    });
+  }
+  tabs.forEach((tab, index) => {
+    tab.addEventListener('click', () => activate(tab));
+    tab.addEventListener('keydown', (event) => {
+      let next;
+      if (event.key === 'ArrowRight') next = (index + 1) % tabs.length;
+      else if (event.key === 'ArrowLeft') next = (index + tabs.length - 1) % tabs.length;
+      else if (event.key === 'Home') next = 0;
+      else if (event.key === 'End') next = tabs.length - 1;
+      else return;
+      event.preventDefault();
+      activate(tabs[next]);
+      tabs[next].focus();
+    });
+  });
+}
+
+function setupRandomRollout(panel) {
+  const video = panel.querySelector('video');
+  const selector = panel.querySelector('[data-rollout-view]');
+  selector.addEventListener('change', () => {
+    const time = video.currentTime;
+    const resume = !video.paused;
+    video.pause();
+    video.removeAttribute('poster');
+    video.onloadedmetadata = () => {
+      video.currentTime = Math.min(time, video.duration || time);
+      if (resume) video.play().catch(() => {});
+    };
+    video.src = selector.value;
+    video.load();
+  });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('[data-random-rollout]').forEach(setupRandomRollout);
+  document.querySelectorAll('[data-results-tabs]').forEach(setupResultsTabs);
   document.querySelectorAll('[data-video-panel]').forEach(setupVideoPanel);
   document.querySelectorAll('[data-ablation-panel]').forEach(setupAblationPanel);
   document.querySelectorAll('[data-attention-panel]').forEach(setupAttentionPanel);

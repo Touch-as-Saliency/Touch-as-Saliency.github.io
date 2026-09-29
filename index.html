@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="description" content="RGB-S: Image-Aligned Tactile Saliency for Robust Dexterous Manipulation">
-  <meta name="keywords" content="Visuo-Tactile Perception, Dexterous Manipulation, RGB-S, Imitation Learning">
+  <meta name="description" content="Tac2Pix: Image-Space Visuo-Tactile Fusion for Dexterous Manipulation">
+  <meta name="keywords" content="Visuo-Tactile Perception, Dexterous Manipulation, Tac2Pix, Image-Space Fusion, Imitation Learning">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta property="og:image" content="https://touch-as-saliency.github.io/static/images/touch.png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:image" content="https://touch-as-saliency.github.io/static/images/touch.png">
-  <title>RGB-S: Image-Aligned Tactile Saliency for Robust Dexterous Manipulation</title>
+  <title>Tac2Pix: Image-Space Visuo-Tactile Fusion for Dexterous Manipulation</title>
 
   <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
   <link rel="icon" type="image/png" href="./static/images/touch.png">
@@ -26,22 +26,28 @@
     <div class="container is-max-desktop">
       <div class="columns is-centered">
         <div class="column has-text-centered">
-          <p class="eyebrow">Touch as Saliency</p>
+          <p class="eyebrow">Touch in the same pixel space as vision</p>
           <h1 class="title publication-title">
-            <span class="title-r">R</span><span class="title-g">G</span><span class="title-b">B</span><span class="title-dash">-</span><span class="title-s">S</span>:
-            <span class="title-im">Im</span><span class="title-a">a</span><span class="title-ge">ge</span>-Aligned Tactile
-            <span class="title-s">Saliency</span> for Robust Dexterous Manipulation
+            <span class="title-s">Tac</span><span class="title-dash">2</span><span class="title-b">Pix</span>:
+            Image-Space Visuo-Tactile Fusion for Dexterous Manipulation
           </h1>
+          <p class="review-status">Under review at ICLR 2027</p>
 
           <div class="publication-links">
             <span class="link-block">
-              <a class="button is-dark is-rounded" aria-disabled="true" tabindex="-1">
-                <span class="icon"><i class="fas fa-file-pdf"></i></span>
+              <button class="button is-dark is-rounded" type="button" disabled aria-disabled="true">
+                <span class="icon" aria-hidden="true"><i class="fas fa-file-pdf"></i></span>
                 <span>Paper</span>
-              </a>
+              </button>
             </span>
             <span class="link-block">
-              <a href="#interactive-videos" class="button is-dark is-rounded">
+              <button class="button is-dark is-rounded" type="button" disabled aria-disabled="true">
+                <span class="icon" aria-hidden="true"><i class="fab fa-github"></i></span>
+                <span>Code <span class="resource-soon">Soon</span></span>
+              </button>
+            </span>
+            <span class="link-block">
+              <a href="#project-demo" class="button is-dark is-rounded">
                 <span class="icon"><i class="fab fa-youtube"></i></span>
                 <span>Supplementary Video</span>
               </a>
@@ -59,14 +65,34 @@
   </div>
 </section>
 
+<section class="section demo-section" id="project-demo" aria-label="Project demonstration video">
+  <div class="container is-max-desktop">
+    <video class="demo-video" controls playsinline preload="metadata" width="1920" height="1080" poster="./static/images/tac2pix-demo-poster.jpg" aria-label="Tac2Pix project demonstration">
+      <source src="./static/videos/tac2pix-demo.mp4" type="video/mp4">
+      Your browser does not support embedded video. <a href="./static/videos/tac2pix-demo.mp4">Download the project demo</a>.
+    </video>
+  </div>
+</section>
+
+<nav class="project-nav" aria-label="Page sections">
+  <a href="#overview">Overview</a>
+  <a href="#method">Method</a>
+  <a href="#interactive-videos">Rollouts</a>
+  <a href="#simulation-results">Simulation</a>
+  <a href="#real-results">Real-world</a>
+  <a href="#robustness">Robustness</a>
+  <a href="#random-rollouts">Random rollouts</a>
+  <a href="#ablations">Ablations</a>
+</nav>
+
 <main>
-  <section class="section teaser-section">
+  <section class="section teaser-section" id="overview">
     <div class="container is-max-widescreen">
       <figure class="figure-block">
-        <img src="./static/images/rgb-s-teaser.png" alt="Overview of the RGB-S tactile saliency paradigm">
+        <img fetchpriority="high" decoding="async" src="./static/images/tac2pix-teaser.png" alt="Overview of the Tac2Pix tactile saliency paradigm">
         <figcaption>
-          <strong>Overview of RGB-S.</strong>
-          Instead of treating tactile readings as isolated vectors, RGB-S projects physical contacts into the RGB image plane and renders them as force-aware saliency maps. This gives the policy spatially aligned touch cues when task-relevant visual evidence is hidden.
+          <strong>Overview of Tac2Pix.</strong>
+          Tac2Pix uses robot kinematics and camera calibration to express sparse touch in the same pixel coordinates as vision. Force-aware saliency maps make this geometry available to pretrained 2D visual representations and downstream manipulation policies.
         </figcaption>
       </figure>
     </div>
@@ -79,22 +105,22 @@
         <div class="column">
           <div class="info-card">
             <div class="card-icon"><i class="fas fa-project-diagram"></i></div>
-            <h3>Image-Aligned Touch</h3>
-            <p>Tactile nodes are localized with robot kinematics and projected through calibrated cameras into image coordinates.</p>
+            <h3>Explicit Touch–Vision Alignment</h3>
+            <p>Normalized tactile responses are localized with robot kinematics and projected through calibrated cameras into RGB pixel coordinates.</p>
           </div>
         </div>
         <div class="column">
           <div class="info-card">
             <div class="card-icon"><i class="fas fa-burn"></i></div>
             <h3>Force-Aware Saliency</h3>
-            <p>Contacts become dense Gaussian saliency maps whose intensity reflects tactile force magnitude and uncertainty.</p>
+            <p>Tactile magnitude controls both the strength and spatial support of projected Gaussian cues. Overlapping responses are combined by taking their maximum.</p>
           </div>
         </div>
         <div class="column">
           <div class="info-card">
             <div class="card-icon"><i class="fas fa-network-wired"></i></div>
-            <h3>Lightweight Fusion</h3>
-            <p>A pretrained RGB encoder is expanded from 3 to 4 input channels, with the saliency channel initialized to zero.</p>
+            <h3>Zero-Initialized Visual Adaptation</h3>
+            <p>A lightweight convolutional or patch-input adaptation integrates touch while preserving the pretrained RGB pathway at initialization.</p>
           </div>
         </div>
       </div>
@@ -105,15 +131,9 @@
     <div class="container is-max-desktop">
       <h2 class="title is-3 section-title has-text-centered">Abstract</h2>
       <div class="content abstract-content">
-        <p>
-          Effective visuo-tactile integration is critical for robotic dexterous manipulation, especially when visual observations are unreliable or occluded. However, robustly aligning sparse, heterogeneous tactile measurements with dense visual representations remains a fundamental challenge. Most existing approaches require policies to learn cross-modal correspondences implicitly from limited demonstrations, without leveraging geometric priors.
-        </p>
-        <p>
-          RGB-S explicitly grounds physical contacts in the image domain. Using robot forward kinematics and camera calibration, tactile sensor locations are projected onto the RGB image plane and rendered as force-modulated Gaussian saliency maps. These 2D spatial anchors are integrated through a zero-initialized conditioning architecture that preserves pretrained visual features while allowing the policy to learn from contact cues.
-        </p>
-        <p>
-          We evaluate RGB-S on six dexterous manipulation tasks in simulation and the real world under severe visual occlusions. Real-world experiments show that RGB-S improves occluded manipulation success rates by <strong>26.7 percentage points</strong> over the strongest implicit visuo-tactile baseline.
-        </p>
+        <p>Vision and touch are naturally complementary for dexterous manipulation, yet visual observations are dense and spatially structured while tactile measurements are sparse, heterogeneous, and robot-centric. Each tactile measurement is attached to a known location on the robot’s kinematic chain. Can this localization prior provide a shared representation that explicitly aligns touch with vision?</p>
+        <p>We introduce <strong>Tac2Pix</strong>, an image-space visuo-tactile fusion framework that projects sparse tactile measurements onto the RGB image plane using forward kinematics and camera calibration, then renders them as force-aware saliency maps. By expressing touch in the same pixel space as vision, Tac2Pix directly leverages pretrained 2D visual representations. Zero-initialized input adaptation preserves the original visual pathway at the start of policy learning.</p>
+        <p>We evaluate Tac2Pix on three simulated and three real-world dexterous manipulation tasks. Simulation experiments span four policy architectures and multiple visual backbones. Across the three real-world tasks, Tac2Pix improves average success under fixed visual occlusion by <strong>26.7 percentage points</strong> over the strongest latent visuo-tactile fusion baseline. An additional three-seed Pick-and-Place evaluation tests robustness under fixed, random, and physical occlusions.</p>
       </div>
     </div>
   </section>
@@ -155,15 +175,16 @@
     </div>
   </section>
 
-  <section class="section band">
+  <section class="section band" id="method">
     <div class="container is-max-widescreen">
-      <h2 class="title is-3 section-title has-text-centered">RGB-S Architecture</h2>
+      <h2 class="title is-3 section-title has-text-centered">From Sparse Touch to Visual Features</h2>
       <figure class="figure-block">
-        <img src="./static/images/rgb-s-architecture.png" alt="The RGB-S architecture">
+        <img loading="lazy" decoding="async" src="./static/images/tac2pix-pipeline.png" alt="The Tac2Pix architecture">
         <figcaption>
-          RGB-S concatenates an RGB image with a tactile saliency map, encodes the 4-channel observation with a shared ResNet-18 visual backbone, compresses features with spatial softmax, and passes the resulting condition to downstream imitation learning policies such as Diffusion Policy, ACT, or MLP behavior cloning.
+          The illustrated CNN encoder extends its pretrained RGB input with a zero-initialized saliency channel. For patch-based encoders, the same principle adds a zero-initialized saliency projection to RGB patch embeddings. The aligned representation supports BC-MLP, ACT, Diffusion Policy, and SmolVLA in our simulation experiments.
         </figcaption>
       </figure>
+      <p class="results-note">Geometric alignment uses known sensor locations and calibrated cameras. The 2D projection does not retain full contact-depth information.</p>
     </div>
   </section>
 
@@ -177,13 +198,13 @@
               Real-world experiments use an xArm6 robot equipped with a LEAP Hand. The hand provides tactile readings from 12 joint-mounted FSR sensors and 4 fingertip TwinTac sensors, yielding 44 projected tactile nodes. Two calibrated RealSense D435 cameras provide RGB observations.
             </p>
             <p>
-              Policies are trained from normal, unobstructed demonstrations and evaluated under both normal and software-masked occluded observations.
+              Policies are trained from normal, unobstructed demonstrations. The main evaluation compares normal observations with a fixed software mask; additional robustness studies consider moving random masks and physical occlusion.
             </p>
           </div>
         </div>
         <div class="column is-6">
           <figure class="figure-block compact">
-            <img src="./static/images/rgb-s-real-platform.png" alt="Hardware setup and tactile sensing layout for RGB-S experiments">
+            <img loading="lazy" decoding="async" src="./static/images/rgb-s-real-platform.png" alt="Hardware setup and tactile sensing layout for Tac2Pix experiments">
           </figure>
         </div>
       </div>
@@ -194,9 +215,9 @@
     <div class="container is-max-widescreen">
       <h2 class="title is-3 section-title has-text-centered">Simulation and Real-World Tasks</h2>
       <figure class="figure-block">
-        <img src="./static/images/rgb-s-tasks.png" alt="Initialization workspaces for RGB-S simulation and real-world tasks">
+        <img loading="lazy" decoding="async" src="./static/images/rgb-s-tasks.png" alt="Initialization workspaces for Tac2Pix simulation and real-world tasks">
         <figcaption>
-          RGB-S is evaluated on six dexterous manipulation tasks: pick-and-place, cube-push, and rotate-cross in simulation; pick-and-place, open-drawer, and flip-box in the real world. Policies are trained with normal observations and evaluated under both normal and occluded settings.
+          Tac2Pix is evaluated on six dexterous manipulation tasks: pick-and-place, cube-push, and rotate-cross in simulation; pick-and-place, open-drawer, and flip-box in the real world. Policies are trained with normal observations and evaluated under both normal and occluded settings.
         </figcaption>
       </figure>
     </div>
@@ -206,9 +227,9 @@
     <div class="container is-max-widescreen">
       <h2 class="title is-3 section-title has-text-centered">Robustness Under Visual Occlusion</h2>
       <figure class="figure-block">
-        <img src="./static/images/rgb-s-real-world-demo.png" alt="Real-world RGB-S occlusion evaluation with saliency rendered">
+        <img loading="lazy" decoding="async" src="./static/images/rgb-s-real-world-demo.png" alt="Real-world Tac2Pix occlusion evaluation with saliency rendered">
         <figcaption>
-          During evaluation, a fixed black mask is applied to task-relevant image regions after the highlighted interaction stage. RGB-S keeps tactile evidence spatially available through the saliency channel, helping the policy continue reasoning when RGB observations are compromised.
+          During evaluation, a fixed black mask is applied to task-relevant image regions after the highlighted interaction stage. Tac2Pix keeps tactile evidence spatially available through the saliency channel, helping the policy continue reasoning when RGB observations are compromised.
         </figcaption>
       </figure>
     </div>
@@ -251,9 +272,87 @@
     </div>
   </section>
 
-  <section class="section results-section">
+  <section class="section band" id="simulation-results">
+    <div class="container is-max-widescreen">
+      <h2 class="title is-3 section-title has-text-centered">One Representation, Multiple Policies</h2>
+      <p class="section-lead">Three simulated manipulation tasks, four policy architectures, and six fusion mechanisms. Tac2Pix ranks first or second in most settings, with gains that depend on the task and policy.</p>
+      <div class="results-tabs" data-results-tabs>
+        <div role="tablist" aria-label="Simulation policy architecture">
+<button type="button" class="results-tab" role="tab" id="tab-bc-mlp" aria-controls="panel-bc-mlp" aria-selected="false" tabindex="-1">BC-MLP</button>
+<button type="button" class="results-tab" role="tab" id="tab-act" aria-controls="panel-act" aria-selected="false" tabindex="-1">ACT</button>
+<button type="button" class="results-tab" role="tab" id="tab-dp" aria-controls="panel-dp" aria-selected="true" tabindex="0">Diffusion Policy</button>
+<button type="button" class="results-tab" role="tab" id="tab-smolvla" aria-controls="panel-smolvla" aria-selected="false" tabindex="-1">SmolVLA</button>
+</div>
+<div class="results-panel" role="tabpanel" id="panel-bc-mlp" aria-labelledby="tab-bc-mlp" tabindex="0" hidden>
+<div class="result-table-wrapper"><table class="table is-fullwidth is-hoverable result-table" data-paper-table="simulation-bc-mlp"><caption class="results-note">BC-MLP · Success rate (%) · Occ. denotes fixed software occlusion; Avg. averages Normal and Occ. for each task.</caption>
+<thead><tr><th scope="col" rowspan="2">Fusion</th><th scope="colgroup" colspan="3">Pick-and-Place</th><th scope="colgroup" colspan="3">Cube-Push</th><th scope="colgroup" colspan="3">Rotate-Cross</th></tr><tr><th scope="col">Normal</th><th scope="col">Occ.</th><th scope="col">Avg.</th><th scope="col">Normal</th><th scope="col">Occ.</th><th scope="col">Avg.</th><th scope="col">Normal</th><th scope="col">Occ.</th><th scope="col">Avg.</th></tr></thead><tbody>
+<tr><th scope="row">Vision-Only</th><td>7.4</td><td>0.0</td><td>3.7</td><td>33.3</td><td>0.0</td><td>16.7</td><td>10.0</td><td>2.0</td><td>6.0</td></tr>
+<tr><th scope="row">Concat</th><td>13.2</td><td>0.0</td><td>6.6</td><td>41.7</td><td>0.0</td><td>20.8</td><td>28.0</td><td>6.0</td><td>17.0</td></tr>
+<tr><th scope="row">FiLM</th><td>6.6</td><td>0.0</td><td>3.3</td><td>50.0</td><td>3.3</td><td>26.7</td><td>8.0</td><td>0.0</td><td>4.0</td></tr>
+<tr><th scope="row">CLIP-style</th><td>3.3</td><td>0.0</td><td>1.7</td><td>38.3</td><td>3.3</td><td>20.8</td><td>28.0</td><td>2.0</td><td>15.0</td></tr>
+<tr><th scope="row">Cross-Attn</th><td>3.3</td><td>8.3</td><td>5.8</td><td>45.0</td><td>21.7</td><td>33.3</td><td>18.0</td><td>6.0</td><td>12.0</td></tr>
+<tr class="ours-row"><th scope="row">Ours (Tac2Pix)</th><td>15.7</td><td>0.8</td><td>8.3</td><td>53.3</td><td>6.7</td><td>30.0</td><td>38.0</td><td>8.0</td><td>23.0</td></tr>
+</tbody></table></div></div>
+<div class="results-panel" role="tabpanel" id="panel-act" aria-labelledby="tab-act" tabindex="0" hidden>
+<div class="result-table-wrapper"><table class="table is-fullwidth is-hoverable result-table" data-paper-table="simulation-act"><caption class="results-note">ACT · Success rate (%) · Occ. denotes fixed software occlusion; Avg. averages Normal and Occ. for each task.</caption>
+<thead><tr><th scope="col" rowspan="2">Fusion</th><th scope="colgroup" colspan="3">Pick-and-Place</th><th scope="colgroup" colspan="3">Cube-Push</th><th scope="colgroup" colspan="3">Rotate-Cross</th></tr><tr><th scope="col">Normal</th><th scope="col">Occ.</th><th scope="col">Avg.</th><th scope="col">Normal</th><th scope="col">Occ.</th><th scope="col">Avg.</th><th scope="col">Normal</th><th scope="col">Occ.</th><th scope="col">Avg.</th></tr></thead><tbody>
+<tr><th scope="row">Vision-Only</th><td>58.7</td><td>0.0</td><td>29.3</td><td>75.0</td><td>1.7</td><td>38.3</td><td>66.0</td><td>16.0</td><td>41.0</td></tr>
+<tr><th scope="row">Concat</th><td>67.8</td><td>5.8</td><td>36.8</td><td>80.0</td><td>0.0</td><td>40.0</td><td>92.0</td><td>20.0</td><td>56.0</td></tr>
+<tr><th scope="row">FiLM</th><td>36.4</td><td>0.8</td><td>18.6</td><td>71.7</td><td>13.3</td><td>42.5</td><td>60.0</td><td>18.0</td><td>39.0</td></tr>
+<tr><th scope="row">CLIP-style</th><td>38.0</td><td>19.0</td><td>28.5</td><td>60.0</td><td>48.3</td><td>54.2</td><td>68.0</td><td>40.0</td><td>54.0</td></tr>
+<tr><th scope="row">Cross-Attn</th><td>67.8</td><td>6.6</td><td>37.2</td><td>68.3</td><td>23.3</td><td>45.8</td><td>84.0</td><td>26.0</td><td>55.0</td></tr>
+<tr class="ours-row"><th scope="row">Ours (Tac2Pix)</th><td>71.9</td><td>23.1</td><td>47.5</td><td>85.0</td><td>46.7</td><td>65.8</td><td>90.0</td><td>44.0</td><td>67.0</td></tr>
+</tbody></table></div></div>
+<div class="results-panel" role="tabpanel" id="panel-dp" aria-labelledby="tab-dp" tabindex="0">
+<div class="result-table-wrapper"><table class="table is-fullwidth is-hoverable result-table" data-paper-table="simulation-dp"><caption class="results-note">DP · Success rate (%) · Occ. denotes fixed software occlusion; Avg. averages Normal and Occ. for each task.</caption>
+<thead><tr><th scope="col" rowspan="2">Fusion</th><th scope="colgroup" colspan="3">Pick-and-Place</th><th scope="colgroup" colspan="3">Cube-Push</th><th scope="colgroup" colspan="3">Rotate-Cross</th></tr><tr><th scope="col">Normal</th><th scope="col">Occ.</th><th scope="col">Avg.</th><th scope="col">Normal</th><th scope="col">Occ.</th><th scope="col">Avg.</th><th scope="col">Normal</th><th scope="col">Occ.</th><th scope="col">Avg.</th></tr></thead><tbody>
+<tr><th scope="row">Vision-Only</th><td>71.9</td><td>7.4</td><td>39.7</td><td>96.7</td><td>25.0</td><td>60.8</td><td>78.0</td><td>26.0</td><td>52.0</td></tr>
+<tr><th scope="row">Concat</th><td>72.7</td><td>14.9</td><td>43.8</td><td>90.0</td><td>25.0</td><td>57.5</td><td>80.0</td><td>38.0</td><td>59.0</td></tr>
+<tr><th scope="row">FiLM</th><td>71.9</td><td>13.2</td><td>42.6</td><td>95.0</td><td>38.3</td><td>66.7</td><td>64.0</td><td>42.0</td><td>53.0</td></tr>
+<tr><th scope="row">CLIP-style</th><td>62.0</td><td>24.8</td><td>43.4</td><td>85.0</td><td>43.3</td><td>64.2</td><td>64.0</td><td>48.0</td><td>56.0</td></tr>
+<tr><th scope="row">Cross-Attn</th><td>42.1</td><td>34.7</td><td>38.4</td><td>71.7</td><td>46.7</td><td>59.2</td><td>70.0</td><td>52.0</td><td>61.0</td></tr>
+<tr class="ours-row"><th scope="row">Ours (Tac2Pix)</th><td>77.7</td><td>52.1</td><td>64.9</td><td>90.0</td><td>43.3</td><td>66.7</td><td>92.0</td><td>40.0</td><td>66.0</td></tr>
+</tbody></table></div></div>
+<div class="results-panel" role="tabpanel" id="panel-smolvla" aria-labelledby="tab-smolvla" tabindex="0" hidden>
+<div class="result-table-wrapper"><table class="table is-fullwidth is-hoverable result-table" data-paper-table="simulation-smolvla"><caption class="results-note">SmolVLA · Success rate (%) · Occ. denotes fixed software occlusion; Avg. averages Normal and Occ. for each task.</caption>
+<thead><tr><th scope="col" rowspan="2">Fusion</th><th scope="colgroup" colspan="3">Pick-and-Place</th><th scope="colgroup" colspan="3">Cube-Push</th><th scope="colgroup" colspan="3">Rotate-Cross</th></tr><tr><th scope="col">Normal</th><th scope="col">Occ.</th><th scope="col">Avg.</th><th scope="col">Normal</th><th scope="col">Occ.</th><th scope="col">Avg.</th><th scope="col">Normal</th><th scope="col">Occ.</th><th scope="col">Avg.</th></tr></thead><tbody>
+<tr><th scope="row">Vision-Only</th><td>62.8</td><td>34.7</td><td>48.8</td><td>76.7</td><td>10.0</td><td>43.3</td><td>82.0</td><td>64.0</td><td>73.0</td></tr>
+<tr><th scope="row">Concat</th><td>63.6</td><td>28.9</td><td>46.3</td><td>61.7</td><td>30.0</td><td>45.8</td><td>84.0</td><td>64.0</td><td>74.0</td></tr>
+<tr><th scope="row">FiLM</th><td>57.0</td><td>28.1</td><td>42.6</td><td>68.3</td><td>31.7</td><td>50.0</td><td>78.0</td><td>60.0</td><td>69.0</td></tr>
+<tr><th scope="row">CLIP-style</th><td>55.4</td><td>32.2</td><td>43.8</td><td>68.3</td><td>11.7</td><td>40.0</td><td>84.0</td><td>50.0</td><td>67.0</td></tr>
+<tr><th scope="row">Cross-Attn</th><td>55.4</td><td>38.0</td><td>46.7</td><td>70.0</td><td>26.7</td><td>48.3</td><td>72.0</td><td>64.0</td><td>68.0</td></tr>
+<tr class="ours-row"><th scope="row">Ours (Tac2Pix)</th><td>69.4</td><td>36.4</td><td>52.9</td><td>71.7</td><td>31.7</td><td>51.7</td><td>84.0</td><td>72.0</td><td>78.0</td></tr>
+</tbody></table></div></div>
+      </div>
+      <p class="results-note">Tactile-enabled methods use the same 44 tactile measurements. Policies are learned from unobstructed demonstrations; software occlusion is introduced at evaluation.</p>
+    </div>
+  </section>
+  <section class="section" id="learning-curves">
+    <div class="container is-max-widescreen">
+      <h2 class="title is-3 section-title has-text-centered">Learning with Changing Visual Conditions</h2>
+      <figure class="figure-block">
+        <img loading="lazy" decoding="async" src="./static/images/tac2pix-learning-curves.png" alt="Three-seed simulated Pick-and-Place learning curves under normal, fixed, and random occlusion">
+        <figcaption>Simulated Pick-and-Place over three training seeds. Curves show mean validation success rate with standard deviation under normal, fixed, and random occlusion, including comparisons with spatial tactile representations.</figcaption>
+      </figure>
+    </div>
+  </section>
+  <section class="section band" id="visual-backbones">
     <div class="container is-max-desktop">
-      <h2 class="title is-3 section-title has-text-centered">Results Snapshot</h2>
+      <h2 class="title is-3 section-title has-text-centered">Compatible with Pretrained Visual Backbones</h2>
+      <p class="section-lead">Holding the task and policy fixed, we change the visual encoder. Tac2Pix achieves the highest occluded success among the compared methods for R3M, VIP, and ResNet.</p>
+<div class="result-table-wrapper"><table class="table is-fullwidth is-hoverable result-table" data-paper-table="backbones">
+<caption class="results-note">ACT on simulated Pick-and-Place. Each cell reports Normal / Fixed Occlusion success (%).</caption>
+<thead><tr><th scope="col">Method</th><th scope="col">R3M</th><th scope="col">VIP</th><th scope="col">ResNet</th></tr></thead><tbody>
+<tr><th scope="row">Vision-Only</th><td>46.3 / 9.9</td><td>48.8 / 9.9</td><td>58.7 / 0.0</td></tr>
+<tr><th scope="row">Cross-Attn</th><td>49.6 / 4.1</td><td>27.3 / 25.6</td><td>67.8 / 6.6</td></tr>
+<tr class="ours-row"><th scope="row">Tac2Pix</th><td>41.3 / 28.9</td><td>63.6 / 27.3</td><td>71.9 / 23.1</td></tr>
+</tbody></table></div>
+    </div>
+  </section>
+
+  <section class="section results-section" id="real-results">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 section-title has-text-centered">Real-World Results</h2>
       <div class="columns is-variable is-4">
         <div class="column">
           <div class="metric-card">
@@ -264,18 +363,19 @@
         <div class="column">
           <div class="metric-card">
             <span class="metric-value">51.7%</span>
-            <span class="metric-label">Average real-world occluded success rate for RGB-S</span>
+            <span class="metric-label">Average fixed-occlusion success across three real-world tasks</span>
           </div>
         </div>
         <div class="column">
           <div class="metric-card">
             <span class="metric-value">+26.7</span>
-            <span class="metric-label">Percentage-point gain over the strongest implicit tactile baseline under real occlusion</span>
+            <span class="metric-label">Percentage-point gain over the strongest latent fusion baseline in the same three-task evaluation</span>
           </div>
         </div>
       </div>
+      <p class="results-note">Diffusion Policy on Pick-and-Place, Open Drawer, and Flip Box. One training seed; 20 trials per task and visual condition. Success rates are averaged across the three tasks.</p>
       <div class="result-table-wrapper">
-        <table class="table is-fullwidth is-hoverable result-table">
+        <table class="table is-fullwidth is-hoverable result-table" data-paper-table="real-main">
           <thead>
             <tr>
               <th>Method</th>
@@ -296,23 +396,89 @@
             </tr>
             <tr>
               <td>Cross-Attn</td>
-              <td>30.0%</td>
+              <td>35.0%</td>
               <td>25.0%</td>
             </tr>
             <tr class="ours-row">
-              <td>Ours (RGB-S)</td>
+              <td>Ours (Tac2Pix)</td>
               <td>66.7%</td>
               <td>51.7%</td>
             </tr>
           </tbody>
         </table>
       </div>
+<details class="results-details"><summary>View success counts by real-world task</summary><div class="result-table-wrapper"><table class="table is-fullwidth is-hoverable result-table" data-paper-table="real-counts">
+<caption class="results-note">Each cell reports Normal / Fixed Occlusion successes, out of 20 trials in each condition.</caption>
+<thead><tr><th scope="col">Method</th><th scope="col">Pick-and-Place</th><th scope="col">Open Drawer</th><th scope="col">Flip Box</th></tr></thead><tbody>
+<tr><th scope="row">Vision-Only</th><td>9/20 / 0/20</td><td>12/20 / 4/20</td><td>13/20 / 2/20</td></tr>
+<tr><th scope="row">Concat</th><td>9/20 / 1/20</td><td>10/20 / 6/20</td><td>14/20 / 1/20</td></tr>
+<tr><th scope="row">Cross-Attn</th><td>4/20 / 0/20</td><td>6/20 / 4/20</td><td>11/20 / 11/20</td></tr>
+<tr class="ours-row"><th scope="row">Ours (Tac2Pix)</th><td>9/20 / 7/20</td><td>14/20 / 10/20</td><td>17/20 / 14/20</td></tr>
+</tbody></table></div></details>
     </div>
   </section>
 
+  <section class="section band" id="robustness">
+    <div class="container is-max-widescreen">
+      <h2 class="title is-3 section-title has-text-centered">Beyond Fixed Occlusion</h2>
+      <p class="section-lead">A three-seed real-world Pick-and-Place evaluation tests changes in the occlusion pattern and compares image-space grounding with adapted spatial tactile representations.</p>
+      <div class="protocol-grid">
+        <article class="protocol-card"><h3>Fixed</h3><p>A task-specific software mask is activated after a predefined interaction stage and stays in place.</p></article>
+        <article class="protocol-card"><h3>Random</h3><p>The same-size mask moves every 20 frames among task-relevant regions. Methods share the same mask schedule.</p></article>
+        <article class="protocol-card"><h3>Physical</h3><p>A human dynamically occludes the camera in the real world. The RGB stream is not digitally masked.</p></article>
+      </div>
+<div class="result-table-wrapper"><table class="table is-fullwidth is-hoverable result-table" data-paper-table="real-robustness">
+<caption class="results-note">Real-world Pick-and-Place · Success rate (mean ± std, %) over three independently trained seeds.</caption>
+<thead><tr><th scope="col">Method</th><th scope="col">Normal</th><th scope="col">Fixed Occ.</th><th scope="col">Random Occ.</th><th scope="col">Physical Occ.</th></tr></thead><tbody>
+<tr><th scope="row">Vision-Only</th><td>41.7 ± 4.7</td><td>6.7 ± 9.4</td><td>23.3 ± 15.5</td><td>25.0 ± 4.1</td></tr>
+<tr><th scope="row">Cross-Attn</th><td>25.0 ± 4.1</td><td>6.7 ± 4.7</td><td>10.0 ± 4.1</td><td>21.7 ± 6.2</td></tr>
+<tr><th scope="row">3D-ViTac (adapted)</th><td>5.0 ± 4.1</td><td>0.0 ± 0.0</td><td>0.0 ± 0.0</td><td>1.7 ± 2.4</td></tr>
+<tr><th scope="row">SaTA (adapted)</th><td>13.3 ± 2.4</td><td>0.0 ± 0.0</td><td>5.0 ± 0.0</td><td>3.3 ± 2.4</td></tr>
+<tr class="ours-row"><th scope="row">Ours (Tac2Pix)</th><td>46.7 ± 2.4</td><td>25.0 ± 7.1</td><td>28.3 ± 8.5</td><td>31.7 ± 4.7</td></tr>
+</tbody></table></div>
+      <p class="results-note">This one-task, three-seed evaluation is separate from the three-task averages above. Its seeds include the original Pick-and-Place run. 3D-ViTac and SaTA are adapted to our sparse tactile sensing setup; the comparison is specific to these adaptations.</p>
+    </div>
+  </section>
+  <section class="section" id="random-rollouts">
+    <div class="container is-max-widescreen">
+      <h2 class="title is-3 section-title has-text-centered">Random Occlusion in Simulation</h2>
+      <p class="section-lead">Fresh Tac2Pix Pick-and-Place rollouts show a successful placement and a failed attempt under a moving software mask. White contact cues visualize the tactile saliency supplied to the policy.</p>
+      <div class="new-rollout-grid">
+        <figure data-random-rollout>
+          <video controls playsinline muted preload="metadata" poster="./static/images/tac2pix_random_success_i60_s202_poster.jpg" aria-label="Successful placement: simulated random occlusion" src="./static/videos/tac2pix_random_success_i60_s202_masked_white_overlay_dual.mp4"></video>
+          <figcaption class="rollout-caption">
+            <strong>Successful placement</strong>
+            <label for="random-view-success">View</label>
+            <div class="select is-small is-fullwidth"><select id="random-view-success" data-rollout-view>
+<option value="./static/videos/tac2pix_random_success_i60_s202_masked_white_overlay_dual.mp4">Both cameras · white saliency</option>
+<option value="./static/videos/tac2pix_random_success_i60_s202_masked_white_overlay_left.mp4">Left camera · white saliency</option>
+<option value="./static/videos/tac2pix_random_success_i60_s202_masked_white_overlay_right.mp4">Right camera · white saliency</option>
+<option value="./static/videos/tac2pix_random_success_i60_s202_masked_rgb_dual.mp4">Both cameras · masked RGB</option>
+<option value="./static/videos/tac2pix_random_success_i60_s202_clean_rgb_dual.mp4">Both cameras · unobstructed observer</option>
+            </select></div>
+          </figcaption>
+        </figure>
+        <figure data-random-rollout>
+          <video controls playsinline muted preload="metadata" poster="./static/images/tac2pix_random_failure_i0_s202_poster.jpg" aria-label="Failed attempt: simulated random occlusion" src="./static/videos/tac2pix_random_failure_i0_s202_masked_white_overlay_dual.mp4"></video>
+          <figcaption class="rollout-caption">
+            <strong>Failed attempt</strong>
+            <label for="random-view-failure">View</label>
+            <div class="select is-small is-fullwidth"><select id="random-view-failure" data-rollout-view>
+<option value="./static/videos/tac2pix_random_failure_i0_s202_masked_white_overlay_dual.mp4">Both cameras · white saliency</option>
+<option value="./static/videos/tac2pix_random_failure_i0_s202_masked_white_overlay_left.mp4">Left camera · white saliency</option>
+<option value="./static/videos/tac2pix_random_failure_i0_s202_masked_white_overlay_right.mp4">Right camera · white saliency</option>
+<option value="./static/videos/tac2pix_random_failure_i0_s202_masked_rgb_dual.mp4">Both cameras · masked RGB</option>
+<option value="./static/videos/tac2pix_random_failure_i0_s202_clean_rgb_dual.mp4">Both cameras · unobstructed observer</option>
+            </select></div>
+          </figcaption>
+        </figure>
+      </div>
+      <p class="results-note">Simulation protocol: a 240 × 120 pixel mask moves across each 640 × 480 camera view every 20 control steps, starting at step 0. These selected examples are separate from the real-world evaluation above; they are not a success-rate estimate. The unobstructed observer view shows the same masked-policy trajectory, not a separate evaluation. Playback: 30 fps.</p>
+    </div>
+  </section>
   <section class="section band">
     <div class="container is-max-widescreen">
-      <h2 class="title is-3 section-title has-text-centered">Attention Under normal and occluded scenes</h2>
+      <h2 class="title is-3 section-title has-text-centered">Attention Under Normal and Occluded Observations</h2>
 
       <div class="attention-panel">
         <div class="attention-domain" data-attention-panel data-attention-domain="sim">
@@ -331,7 +497,7 @@
           </div>
           <div class="attention-model-grid attention-model-grid-sim" data-attention-grid></div>
           <figure class="attention-colorbar">
-            <img src="./static/images/grad_cam/color_bar.png" alt="Grad-CAM color scale for simulation attention maps">
+            <img loading="lazy" decoding="async" src="./static/images/grad_cam/color_bar.png" alt="Grad-CAM color scale for simulation attention maps">
             <figcaption>Grad-CAM intensity scale</figcaption>
           </figure>
         </div>
@@ -352,7 +518,7 @@
           </div>
           <div class="attention-model-grid attention-model-grid-real" data-attention-grid></div>
           <figure class="attention-colorbar">
-            <img src="./static/images/grad_cam/color_bar.png" alt="Grad-CAM color scale for real-world attention maps">
+            <img loading="lazy" decoding="async" src="./static/images/grad_cam/color_bar.png" alt="Grad-CAM color scale for real-world attention maps">
             <figcaption>Grad-CAM intensity scale</figcaption>
           </figure>
         </div>
@@ -360,20 +526,21 @@
     </div>
   </section>
 
-  <section class="section">
+  <section class="section" id="ablations">
     <div class="container is-max-desktop">
       <h2 class="title is-3 section-title has-text-centered">Design Ablations</h2>
+      <p class="section-lead">Diffusion Policy on Pick-and-Place: tactile rendering, fusion and initialization, and touch–image alignment.</p>
 
       <div class="ablation-subsection">
         <h3>Ablation on Tactile Saliency Rendering</h3>
         <p>
-          Force-aware RGB-S reaches 78.5% normal and 39.7% occluded success on simulated pick-and-place, outperforming vision-only, RGB overlay, and binary saliency variants.
+          Force-aware Tac2Pix reaches 77.7% normal and 52.1% fixed-occlusion success on simulated Pick-and-Place. Binary contact already provides a geometric prior; force modulation adds information about contact strength.
         </p>
         <div class="ablation-video-panel" data-ablation-panel>
           <div class="ablation-video-strip">
             <div class="ablation-video-item">
               <div class="ablation-video-box">
-                <video data-ablation-video src="./static/videos/ablation-tinnpc.mp4?v=h264" muted playsinline preload="metadata"></video>
+                <video data-ablation-video src="./static/videos/tac2pix-ablation-overlay-left.mp4" poster="./static/images/tac2pix-ablation-overlay-left.jpg" aria-label="RGB overlay: left-camera Pick-and-Place rollout" muted playsinline preload="metadata"></video>
               </div>
               <h3>RGB Overlay</h3>
             </div>
@@ -384,14 +551,14 @@
               <div class="ablation-video-pair">
                 <div class="ablation-video-box">
                   <div class="video-label">RGB</div>
-                  <video data-ablation-video src="./static/videos/ablation-static-rgb.mp4?v=h264" muted playsinline preload="metadata"></video>
+                  <video data-ablation-video src="./static/videos/tac2pix-ablation-static-rgb-left.mp4" poster="./static/images/tac2pix-ablation-static-rgb-left.jpg" aria-label="Binary Tac2Pix: left-camera RGB" muted playsinline preload="metadata"></video>
                 </div>
                 <div class="ablation-video-box">
                   <div class="video-label">Saliency</div>
-                  <video data-ablation-video src="./static/videos/ablation-static-saliency.mp4?v=h264" muted playsinline preload="metadata"></video>
+                  <video data-ablation-video src="./static/videos/tac2pix-ablation-static-saliency-left.mp4" poster="./static/images/tac2pix-ablation-static-saliency-left.jpg" aria-label="Binary Tac2Pix: synchronized static saliency" muted playsinline preload="metadata"></video>
                 </div>
               </div>
-              <h3>Binary RGB-S</h3>
+              <h3>Binary Tac2Pix</h3>
             </div>
 
             <div class="ablation-divider" aria-hidden="true"></div>
@@ -400,14 +567,14 @@
               <div class="ablation-video-pair">
                 <div class="ablation-video-box">
                   <div class="video-label">RGB</div>
-                  <video data-ablation-video src="./static/videos/ablation-dynamic-rgb.mp4?v=h264" muted playsinline preload="metadata"></video>
+                  <video data-ablation-video src="./static/videos/tac2pix-ablation-dynamic-rgb-left.mp4" poster="./static/images/tac2pix-ablation-dynamic-rgb-left.jpg" aria-label="Force-aware Tac2Pix: left-camera RGB" muted playsinline preload="metadata"></video>
                 </div>
                 <div class="ablation-video-box">
                   <div class="video-label">Saliency</div>
-                  <video data-ablation-video src="./static/videos/ablation-dynamic-saliency.mp4?v=h264" muted playsinline preload="metadata"></video>
+                  <video data-ablation-video src="./static/videos/tac2pix-ablation-dynamic-saliency-left.mp4" poster="./static/images/tac2pix-ablation-dynamic-saliency-left.jpg" aria-label="Force-aware Tac2Pix: synchronized dynamic saliency" muted playsinline preload="metadata"></video>
                 </div>
               </div>
-              <h3>Force-aware RGB-S</h3>
+              <h3>Force-aware Tac2Pix</h3>
             </div>
           </div>
 
@@ -420,45 +587,19 @@
           </div>
           <p class="video-status" data-ablation-status hidden></p>
         </div>
+        <p class="results-note">Selected normal-condition Pick-and-Place rollouts from the left camera. RGB and saliency within each pair are synchronized; each variant follows its own policy trajectory. All clips play at 30 fps.</p>
 
         <div class="ablation-table-block">
           <div class="result-table-wrapper">
-            <table class="table is-fullwidth is-hoverable result-table">
-              <thead>
-                <tr>
-                  <th>Variant</th>
-                  <th>Normal</th>
-                  <th>Occluded</th>
-                  <th>Average</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Vision-only</td>
-                  <td>71.9</td>
-                  <td>7.4</td>
-                  <td>39.7</td>
-                </tr>
-                <tr>
-                  <td>RGB Overlay</td>
-                  <td>65.3</td>
-                  <td>33.1</td>
-                  <td>49.2</td>
-                </tr>
-                <tr>
-                  <td>Binary RGB-S</td>
-                  <td>65.3</td>
-                  <td>27.3</td>
-                  <td>46.3</td>
-                </tr>
-                <tr class="ours-row">
-                  <td>Ours (Force-aware RGB-S)</td>
-                  <td>78.5</td>
-                  <td>39.7</td>
-                  <td>59.1</td>
-                </tr>
-              </tbody>
-            </table>
+            <table class="table is-fullwidth is-hoverable result-table" data-paper-table="rendering">
+<thead><tr><th scope="col">Variant</th><th scope="col">Normal (%)</th><th scope="col">Fixed Occ. (%)</th><th scope="col">Average (%)</th></tr></thead>
+<tbody>
+<tr><th scope="row">Vision-only</th><td>71.9</td><td>7.4</td><td>39.7</td></tr>
+<tr><th scope="row">RGB Overlay</th><td>66.9</td><td>28.1</td><td>47.5</td></tr>
+<tr><th scope="row">Binary Tac2Pix</th><td>70.2</td><td>44.6</td><td>57.4</td></tr>
+<tr class="ours-row"><th scope="row">Tac2Pix (Force-aware)</th><td>77.7</td><td>52.1</td><td>64.9</td></tr>
+</tbody>
+</table>
           </div>
         </div>
       </div>
@@ -466,54 +607,19 @@
       <div class="ablation-subsection">
         <h3>Ablation on Spatial Misalignment</h3>
         <p>
-          RGB-S is tolerant to moderate projection noise, but performance drops as tactile saliency becomes severely misaligned with the image.
+          We shift the tactile saliency map while leaving RGB unchanged. Performance generally decreases with spatial misalignment, particularly under occlusion; the effect need not be monotonic at every offset.
         </p>
         <div class="ablation-table-block ablation-table-wide">
           <div class="result-table-wrapper">
-            <table class="table is-fullwidth is-hoverable result-table">
-              <thead>
-                <tr>
-                  <th>Setting</th>
-                  <th>Condition</th>
-                  <th>0 px</th>
-                  <th>25 px</th>
-                  <th>50 px</th>
-                  <th>100 px</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td rowspan="2">Sim</td>
-                  <td>Normal</td>
-                  <td>78.5</td>
-                  <td>66.9</td>
-                  <td>70.2</td>
-                  <td>62.0</td>
-                </tr>
-                <tr>
-                  <td>Occ.</td>
-                  <td>39.7</td>
-                  <td>32.2</td>
-                  <td>24.0</td>
-                  <td>9.9</td>
-                </tr>
-                <tr>
-                  <td rowspan="2">Real</td>
-                  <td>Normal</td>
-                  <td>9/20</td>
-                  <td>8/20</td>
-                  <td>5/20</td>
-                  <td>5/20</td>
-                </tr>
-                <tr>
-                  <td>Occ.</td>
-                  <td>7/20</td>
-                  <td>4/20</td>
-                  <td>3/20</td>
-                  <td>3/20</td>
-                </tr>
-              </tbody>
-            </table>
+            <table class="table is-fullwidth is-hoverable result-table" data-paper-table="alignment">
+<thead><tr><th scope="col">Setting</th><th scope="col">Condition</th><th scope="col">0 px</th><th scope="col">25 px</th><th scope="col">50 px</th><th scope="col">100 px</th></tr></thead>
+<tbody>
+<tr><th scope="row">Sim</th><td>Normal</td><td>77.7%</td><td>71.9%</td><td>71.1%</td><td>67.8%</td></tr>
+<tr><th scope="row">Sim</th><td>Fixed Occ.</td><td>52.1%</td><td>27.3%</td><td>31.4%</td><td>18.2%</td></tr>
+<tr><th scope="row">Real</th><td>Normal</td><td>9/20</td><td>8/20</td><td>5/20</td><td>5/20</td></tr>
+<tr><th scope="row">Real</th><td>Fixed Occ.</td><td>7/20</td><td>4/20</td><td>3/20</td><td>3/20</td></tr>
+</tbody>
+</table>
           </div>
         </div>
       </div>
@@ -521,42 +627,25 @@
       <div class="ablation-subsection">
         <h3>Ablation on Fusion Architecture</h3>
         <p>
-          Early zero-initialized RGB-S fusion achieves stronger occluded performance than late or intermediate fusion alternatives.
+          Early tactile injection and zero-initialized input adaptation work together. Removing zero initialization reduces success under both normal and occluded observations.
         </p>
         <figure class="figure-block compact">
-          <img src="./static/images/rgb-s-fusion-ablation.png" alt="Fusion architecture ablation details">
+          <img loading="lazy" decoding="async" src="./static/images/rgb-s-fusion-ablation.png" alt="Fusion architecture ablation details">
           <figcaption>
             Fusion architecture details from the appendix: feature concatenation, late fusion, and intermediate fusion alternatives used in the ablation study.
           </figcaption>
         </figure>
         <div class="ablation-table-block">
           <div class="result-table-wrapper">
-            <table class="table is-fullwidth is-hoverable result-table">
-              <thead>
-                <tr>
-                  <th>Architecture</th>
-                  <th>Normal</th>
-                  <th>Occ.</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Late Fusion</td>
-                  <td>73.6</td>
-                  <td>35.5</td>
-                </tr>
-                <tr>
-                  <td>Intermediate</td>
-                  <td>73.6</td>
-                  <td>22.3</td>
-                </tr>
-                <tr class="ours-row">
-                  <td>Ours (Early)</td>
-                  <td>78.5</td>
-                  <td>39.7</td>
-                </tr>
-              </tbody>
-            </table>
+            <table class="table is-fullwidth is-hoverable result-table" data-paper-table="fusion">
+<thead><tr><th scope="col">Architecture</th><th scope="col">Normal (%)</th><th scope="col">Fixed Occ. (%)</th><th scope="col">Average (%)</th></tr></thead>
+<tbody>
+<tr><th scope="row">Late Fusion</th><td>64.5</td><td>14.0</td><td>39.3</td></tr>
+<tr><th scope="row">Intermediate Fusion</th><td>69.4</td><td>26.4</td><td>47.9</td></tr>
+<tr><th scope="row">Early w/o Zero Init.</th><td>49.6</td><td>21.5</td><td>35.6</td></tr>
+<tr class="ours-row"><th scope="row">Tac2Pix (Early)</th><td>77.7</td><td>52.1</td><td>64.9</td></tr>
+</tbody>
+</table>
           </div>
         </div>
       </div>
