@@ -1,7 +1,19 @@
+:root {
+  --content-width: 1080px;
+}
+
 body {
   color: #222;
   font-family: 'Noto Sans', sans-serif;
   line-height: 1.6;
+}
+
+.page-container {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: var(--content-width);
+  min-width: 0;
+  width: 100%;
 }
 
 .title {
@@ -90,20 +102,6 @@ body {
   font-weight: 700;
 }
 
-.review-status {
-  align-items: center;
-  background: #e5eef3;
-  border: 1px solid #cbdce5;
-  border-radius: 999px;
-  color: #294b5e;
-  display: inline-flex;
-  font-size: 0.9rem;
-  font-weight: 700;
-  gap: 0.5rem;
-  margin: 0.25rem 0 1.5rem;
-  padding: 0.4rem 0.95rem;
-}
-
 .publication-links .button[aria-disabled="true"],
 .publication-links .button:disabled {
   background: #e5ebee;
@@ -173,7 +171,7 @@ section[id] {
   font-size: 1.03rem;
   line-height: 1.75;
   margin: -0.25rem auto 1.75rem;
-  max-width: 900px;
+  width: 100%;
 }
 
 .band {
@@ -186,7 +184,7 @@ section[id] {
 }
 
 .demo-video {
-  aspect-ratio: 16 / 9;
+  aspect-ratio: auto 16 / 9;
   background: #101820;
   border-radius: 10px;
   box-shadow: 0 6px 24px rgba(23, 37, 46, 0.12);
@@ -197,10 +195,6 @@ section[id] {
 
 .teaser-section {
   padding-top: 2rem;
-}
-
-.teaser-section .figure-block figcaption {
-  max-width: 1120px;
 }
 
 .abstract-content {
@@ -221,13 +215,14 @@ section[id] {
   height: auto;
   margin: 0 auto;
   max-width: 100%;
+  width: 100%;
 }
 
 .figure-block figcaption {
   color: #344852;
   font-size: 1.02rem;
   margin: 1rem auto 0;
-  max-width: 980px;
+  width: 100%;
   text-align: center;
 }
 
@@ -492,7 +487,7 @@ section[id] {
 }
 
 .attention-panel {
-  --attention-card-width: 260px;
+  --attention-card-width: 248px;
   --attention-image-gap: 0.45rem;
 }
 
@@ -533,7 +528,7 @@ section[id] {
 .attention-model-grid {
   display: grid;
   gap: 1rem;
-  justify-content: center;
+  justify-content: safe center;
   overflow-x: auto;
   padding-bottom: 0.25rem;
 }
@@ -895,7 +890,7 @@ section[id] {
 
   .attention-model-grid-sim,
   .attention-model-grid-real {
-    grid-template-columns: minmax(0, 260px);
+    grid-template-columns: minmax(0, var(--attention-card-width));
   }
 
   .attention-model-card {

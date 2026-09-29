@@ -23,7 +23,7 @@
 
 <section class="hero publication-header">
   <div class="hero-body">
-    <div class="container is-max-desktop">
+    <div class="page-container">
       <div class="columns is-centered">
         <div class="column has-text-centered">
           <p class="eyebrow">Touch in the same pixel space as vision</p>
@@ -31,7 +31,6 @@
             <span class="title-s">Tac</span><span class="title-dash">2</span><span class="title-b">Pix</span>:
             Image-Space Visuo-Tactile Fusion for Dexterous Manipulation
           </h1>
-          <p class="review-status">Under review at ICLR 2027</p>
 
           <div class="publication-links">
             <span class="link-block">
@@ -66,10 +65,10 @@
 </section>
 
 <section class="section demo-section" id="project-demo" aria-label="Project demonstration video">
-  <div class="container is-max-desktop">
-    <video class="demo-video" controls playsinline preload="metadata" width="1920" height="1080" poster="./static/images/tac2pix-demo-poster.jpg" aria-label="Tac2Pix project demonstration">
-      <source src="./static/videos/tac2pix-demo.mp4" type="video/mp4">
-      Your browser does not support embedded video. <a href="./static/videos/tac2pix-demo.mp4">Download the project demo</a>.
+  <div class="page-container">
+    <video class="demo-video" controls playsinline preload="metadata" width="854" height="480" poster="./static/images/tac2pix-demo-poster.jpg?v=word-20260929" aria-label="Tac2Pix project demonstration">
+      <source src="./static/videos/tac2pix-demo.mp4?v=word-20260929" type="video/mp4">
+      Your browser does not support embedded video. <a href="./static/videos/tac2pix-demo.mp4?v=word-20260929">Download the project demo</a>.
     </video>
   </div>
 </section>
@@ -87,7 +86,7 @@
 
 <main>
   <section class="section teaser-section" id="overview">
-    <div class="container is-max-widescreen">
+    <div class="page-container">
       <figure class="figure-block">
         <img fetchpriority="high" decoding="async" src="./static/images/tac2pix-teaser.png" alt="Overview of the Tac2Pix tactile saliency paradigm">
         <figcaption>
@@ -99,7 +98,7 @@
   </section>
 
   <section class="section">
-    <div class="container is-max-desktop">
+    <div class="page-container">
       <h2 class="title is-3 section-title has-text-centered">Key Ideas</h2>
       <div class="columns is-variable is-5">
         <div class="column">
@@ -128,7 +127,7 @@
   </section>
 
   <section class="section band">
-    <div class="container is-max-desktop">
+    <div class="page-container">
       <h2 class="title is-3 section-title has-text-centered">Abstract</h2>
       <div class="content abstract-content">
         <p>Vision and touch are naturally complementary for dexterous manipulation, yet visual observations are dense and spatially structured while tactile measurements are sparse, heterogeneous, and robot-centric. Each tactile measurement is attached to a known location on the robot’s kinematic chain. Can this localization prior provide a shared representation that explicitly aligns touch with vision?</p>
@@ -139,7 +138,7 @@
   </section>
 
   <section class="section band" id="interactive-videos">
-    <div class="container is-max-widescreen">
+    <div class="page-container">
       <div class="video-panel" data-video-panel data-video-set="standard">
         <div class="video-panel-header">
           <h2 class="title is-3 section-title">RGB and Saliency Rollouts</h2>
@@ -176,7 +175,7 @@
   </section>
 
   <section class="section band" id="method">
-    <div class="container is-max-widescreen">
+    <div class="page-container">
       <h2 class="title is-3 section-title has-text-centered">From Sparse Touch to Visual Features</h2>
       <figure class="figure-block">
         <img loading="lazy" decoding="async" src="./static/images/tac2pix-pipeline.png" alt="The Tac2Pix architecture">
@@ -189,7 +188,7 @@
   </section>
 
   <section class="section">
-    <div class="container is-max-widescreen">
+    <div class="page-container">
       <div class="columns is-vcentered is-variable is-6">
         <div class="column is-6">
           <h2 class="title is-3 section-title">Experimental Setup</h2>
@@ -212,7 +211,7 @@
   </section>
 
   <section class="section band">
-    <div class="container is-max-widescreen">
+    <div class="page-container">
       <h2 class="title is-3 section-title has-text-centered">Simulation and Real-World Tasks</h2>
       <figure class="figure-block">
         <img loading="lazy" decoding="async" src="./static/images/rgb-s-tasks.png" alt="Initialization workspaces for Tac2Pix simulation and real-world tasks">
@@ -224,7 +223,7 @@
   </section>
 
   <section class="section">
-    <div class="container is-max-widescreen">
+    <div class="page-container">
       <h2 class="title is-3 section-title has-text-centered">Robustness Under Visual Occlusion</h2>
       <figure class="figure-block">
         <img loading="lazy" decoding="async" src="./static/images/rgb-s-real-world-demo.png" alt="Real-world Tac2Pix occlusion evaluation with saliency rendered">
@@ -236,7 +235,7 @@
   </section>
 
   <section class="section band" id="occluded-rollouts">
-    <div class="container is-max-widescreen">
+    <div class="page-container">
       <div class="video-panel" data-video-panel data-video-set="occluded">
         <div class="video-panel-header">
           <h2 class="title is-3 section-title">Real World Rollouts with occlusions</h2>
@@ -273,7 +272,7 @@
   </section>
 
   <section class="section band" id="simulation-results">
-    <div class="container is-max-widescreen">
+    <div class="page-container">
       <h2 class="title is-3 section-title has-text-centered">One Representation, Multiple Policies</h2>
       <p class="section-lead">Three simulated manipulation tasks, four policy architectures, and six fusion mechanisms. Tac2Pix ranks first or second in most settings, with gains that depend on the task and policy.</p>
       <div class="results-tabs" data-results-tabs>
@@ -328,7 +327,7 @@
     </div>
   </section>
   <section class="section" id="learning-curves">
-    <div class="container is-max-widescreen">
+    <div class="page-container">
       <h2 class="title is-3 section-title has-text-centered">Learning with Changing Visual Conditions</h2>
       <figure class="figure-block">
         <img loading="lazy" decoding="async" src="./static/images/tac2pix-learning-curves.png" alt="Three-seed simulated Pick-and-Place learning curves under normal, fixed, and random occlusion">
@@ -337,7 +336,7 @@
     </div>
   </section>
   <section class="section band" id="visual-backbones">
-    <div class="container is-max-desktop">
+    <div class="page-container">
       <h2 class="title is-3 section-title has-text-centered">Compatible with Pretrained Visual Backbones</h2>
       <p class="section-lead">Holding the task and policy fixed, we change the visual encoder. Tac2Pix achieves the highest occluded success among the compared methods for R3M, VIP, and ResNet.</p>
 <div class="result-table-wrapper"><table class="table is-fullwidth is-hoverable result-table" data-paper-table="backbones">
@@ -351,7 +350,7 @@
   </section>
 
   <section class="section results-section" id="real-results">
-    <div class="container is-max-desktop">
+    <div class="page-container">
       <h2 class="title is-3 section-title has-text-centered">Real-World Results</h2>
       <div class="columns is-variable is-4">
         <div class="column">
@@ -419,7 +418,7 @@
   </section>
 
   <section class="section band" id="robustness">
-    <div class="container is-max-widescreen">
+    <div class="page-container">
       <h2 class="title is-3 section-title has-text-centered">Beyond Fixed Occlusion</h2>
       <p class="section-lead">A three-seed real-world Pick-and-Place evaluation tests changes in the occlusion pattern and compares image-space grounding with adapted spatial tactile representations.</p>
       <div class="protocol-grid">
@@ -440,7 +439,7 @@
     </div>
   </section>
   <section class="section" id="random-rollouts">
-    <div class="container is-max-widescreen">
+    <div class="page-container">
       <h2 class="title is-3 section-title has-text-centered">Random Occlusion in Simulation</h2>
       <p class="section-lead">Fresh Tac2Pix Pick-and-Place rollouts show a successful placement and a failed attempt under a moving software mask. White contact cues visualize the tactile saliency supplied to the policy.</p>
       <div class="new-rollout-grid">
@@ -477,7 +476,7 @@
     </div>
   </section>
   <section class="section band">
-    <div class="container is-max-widescreen">
+    <div class="page-container">
       <h2 class="title is-3 section-title has-text-centered">Attention Under Normal and Occluded Observations</h2>
 
       <div class="attention-panel">
@@ -527,7 +526,7 @@
   </section>
 
   <section class="section" id="ablations">
-    <div class="container is-max-desktop">
+    <div class="page-container">
       <h2 class="title is-3 section-title has-text-centered">Design Ablations</h2>
       <p class="section-lead">Diffusion Policy on Pick-and-Place: tactile rendering, fusion and initialization, and touch–image alignment.</p>
 
@@ -655,7 +654,7 @@
 </main>
 
 <footer class="footer">
-  <div class="container">
+  <div class="page-container">
     <div class="columns is-centered">
       <div class="column is-8">
         <div class="content has-text-centered">

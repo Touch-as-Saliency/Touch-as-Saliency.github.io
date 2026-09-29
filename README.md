@@ -2,7 +2,7 @@
 
 This repository contains the static project page for **Tac2Pix: Image-Space Visuo-Tactile Fusion for Dexterous Manipulation**.
 
-Anonymous review version: **Under review at ICLR 2027**. The Paper button is disabled and Code is marked Soon; neither links to an unreleased resource.
+The page remains anonymous without displaying a review-status or conference badge. The Paper button is disabled and Code is marked Soon; neither links to an unreleased resource.
 
 ## Structure
 
@@ -67,7 +67,7 @@ All five videos are 640×480, 600 frames at 30 fps (20 seconds), H.264/yuv420p w
 
 `static/videos/tac2pix-demo.mp4` appears below the resource buttons and above the teaser figure, with a poster and native playback controls. The Supplementary Video button jumps to this demo. It does not autoplay and preloads only metadata.
 
-The supplied 1080p demo was compressed from 125.08 MiB to 17.10 MiB (86.33% smaller), preserving all 4,822 frames and their presentation timestamps. AAC audio is copied without re-encoding. Full-frame SSIM against the original is 0.998398; full decoding and MP4 faststart were verified. The original source is not modified.
+The supplied `tac2pix_word.mp4` demo is 854×480 HEVC. The browser copy uses H.264/yuv420p with faststart, reduced from 33.22 MiB to 11.20 MiB while preserving all 6,531 frames, their presentation timestamps, 30 fps, and the 217.7-second duration. AAC audio is copied without re-encoding. Full-frame SSIM against the original is 0.997776 and full decoding passed. The source file remains unchanged; its native resolution is retained. The media and poster URLs include a version query so returning visitors load the replacement.
 
 ## New Random-Occlusion Rollouts
 
@@ -76,6 +76,10 @@ New `static/videos/tac2pix_random_*` clips show full force-aware Tac2Pix simulat
 These selected examples use the simulation rebuttal protocol: a 240×120 mask at 640×480, refreshed every 20 control steps from step 0. The white visualization has maximum opacity 30%; policy RGB receives the mask while saliency is supplied separately. The observer view shows the same trajectory and is not an unmasked-policy evaluation. Clips play 600 observation frames at 30 fps (20 seconds).
 
 Real-world Random and Physical Occlusion results are shown separately with their manuscript protocols. No simulated clip is presented as a physical-occlusion experiment. The original three-task real-world averages and expanded three-seed Pick-and-Place results remain distinct.
+
+## Layout
+
+All primary sections use the same responsive content container, up to 1080px wide. Full-width figures, captions, abstracts, and section introductions align to that container; comparison cards, legends, and table scrolling retain their internal layout.
 
 ## Local Preview
 
