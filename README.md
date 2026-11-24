@@ -61,13 +61,13 @@ Ablation rollout comparison keeps the original 1 + 2 + 2 layout and shared playb
 - `static/videos/tac2pix-ablation-static-rgb-left.mp4` and `tac2pix-ablation-static-saliency-left.mp4`: newly recorded Binary44 policy, synchronized left-camera RGB and binary saliency.
 - `static/videos/tac2pix-ablation-dynamic-rgb-left.mp4` and `tac2pix-ablation-dynamic-saliency-left.mp4`: newly recorded force-aware policy, synchronized left-camera RGB and dynamic saliency.
 
-All five videos are 640×480, 600 frames at 30 fps (20 seconds), H.264/yuv420p with faststart. They show independent normal-condition policy rollouts. Each RGB/saliency pair comes from the same trajectory and exact recorded observation frames. The page references the current media files listed above.
+All five videos retain the first 375 frames (12.5 seconds at 30 fps) of the original 640×480 rollouts. They use H.264/yuv420p with faststart. Each RGB/saliency pair comes from the same trajectory and remains synchronized. The white overlay is for visualization.
 
 ## Project Demo
 
 `static/videos/tac2pix-demo.mp4` appears below the resource buttons and above the teaser figure, with a poster and native playback controls. The Supplementary Video button jumps to this demo. It does not autoplay and preloads only metadata.
 
-The supplied `tac2pix_word.mp4` demo is 854×480 HEVC. The browser copy uses H.264/yuv420p with faststart, reduced from 33.22 MiB to 11.20 MiB while preserving all 6,531 frames, their presentation timestamps, 30 fps, and the 217.7-second duration. AAC audio is copied without re-encoding. Full-frame SSIM against the original is 0.997776 and full decoding passed. The source file remains unchanged; its native resolution is retained. The media and poster URLs include a version query so returning visitors load the replacement.
+The browser copy of the supplied `Tac2Pix.mp4` uses H.264/yuv420p with faststart. It preserves the original 1280×720 resolution, all 6,530 frames at 30 fps, their presentation timestamps, and the AAC audio bitstream. The full demo is about 217.7 seconds. The poster is taken from the new demo, and the media and poster URLs include a version query.
 
 ## New Random-Occlusion Rollouts
 

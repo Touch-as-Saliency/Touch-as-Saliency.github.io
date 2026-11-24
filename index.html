@@ -66,9 +66,9 @@
 
 <section class="section demo-section" id="project-demo" aria-label="Project demonstration video">
   <div class="page-container">
-    <video class="demo-video" controls playsinline preload="metadata" width="854" height="480" poster="./static/images/tac2pix-demo-poster.jpg?v=word-20260929" aria-label="Tac2Pix project demonstration">
-      <source src="./static/videos/tac2pix-demo.mp4?v=word-20260929" type="video/mp4">
-      Your browser does not support embedded video. <a href="./static/videos/tac2pix-demo.mp4?v=word-20260929">Download the project demo</a>.
+    <video class="demo-video" controls playsinline preload="metadata" width="1280" height="720" poster="./static/images/tac2pix-demo-poster.jpg?v=20261124" aria-label="Tac2Pix project demonstration">
+      <source src="./static/videos/tac2pix-demo.mp4?v=20261124" type="video/mp4">
+      Your browser does not support embedded video. <a href="./static/videos/tac2pix-demo.mp4?v=20261124">Download the project demo</a>.
     </video>
   </div>
 </section>
@@ -539,7 +539,7 @@
           <div class="ablation-video-strip">
             <div class="ablation-video-item">
               <div class="ablation-video-box">
-                <video data-ablation-video src="./static/videos/tac2pix-ablation-overlay-left.mp4" poster="./static/images/tac2pix-ablation-overlay-left.jpg" aria-label="RGB overlay: left-camera Pick-and-Place rollout" muted playsinline preload="metadata"></video>
+                <video data-ablation-video src="./static/videos/tac2pix-ablation-overlay-left.mp4?v=20261124" poster="./static/images/tac2pix-ablation-overlay-left.jpg" aria-label="RGB overlay: left-camera Pick-and-Place rollout" muted playsinline preload="metadata"></video>
               </div>
               <h3>RGB Overlay</h3>
             </div>
@@ -550,11 +550,11 @@
               <div class="ablation-video-pair">
                 <div class="ablation-video-box">
                   <div class="video-label">RGB</div>
-                  <video data-ablation-video src="./static/videos/tac2pix-ablation-static-rgb-left.mp4" poster="./static/images/tac2pix-ablation-static-rgb-left.jpg" aria-label="Binary Tac2Pix: left-camera RGB" muted playsinline preload="metadata"></video>
+                  <video data-ablation-video src="./static/videos/tac2pix-ablation-static-rgb-left.mp4?v=20261124" poster="./static/images/tac2pix-ablation-static-rgb-left.jpg" aria-label="Binary Tac2Pix: left-camera RGB" muted playsinline preload="metadata"></video>
                 </div>
                 <div class="ablation-video-box">
                   <div class="video-label">Saliency</div>
-                  <video data-ablation-video src="./static/videos/tac2pix-ablation-static-saliency-left.mp4" poster="./static/images/tac2pix-ablation-static-saliency-left.jpg" aria-label="Binary Tac2Pix: synchronized static saliency" muted playsinline preload="metadata"></video>
+                  <video data-ablation-video src="./static/videos/tac2pix-ablation-static-saliency-left.mp4?v=20261124" poster="./static/images/tac2pix-ablation-static-saliency-left.jpg" aria-label="Binary Tac2Pix: synchronized static saliency" muted playsinline preload="metadata"></video>
                 </div>
               </div>
               <h3>Binary Tac2Pix</h3>
@@ -566,11 +566,11 @@
               <div class="ablation-video-pair">
                 <div class="ablation-video-box">
                   <div class="video-label">RGB</div>
-                  <video data-ablation-video src="./static/videos/tac2pix-ablation-dynamic-rgb-left.mp4" poster="./static/images/tac2pix-ablation-dynamic-rgb-left.jpg" aria-label="Force-aware Tac2Pix: left-camera RGB" muted playsinline preload="metadata"></video>
+                  <video data-ablation-video src="./static/videos/tac2pix-ablation-dynamic-rgb-left.mp4?v=20261124" poster="./static/images/tac2pix-ablation-dynamic-rgb-left.jpg" aria-label="Force-aware Tac2Pix: left-camera RGB" muted playsinline preload="metadata"></video>
                 </div>
                 <div class="ablation-video-box">
                   <div class="video-label">Saliency</div>
-                  <video data-ablation-video src="./static/videos/tac2pix-ablation-dynamic-saliency-left.mp4" poster="./static/images/tac2pix-ablation-dynamic-saliency-left.jpg" aria-label="Force-aware Tac2Pix: synchronized dynamic saliency" muted playsinline preload="metadata"></video>
+                  <video data-ablation-video src="./static/videos/tac2pix-ablation-dynamic-saliency-left.mp4?v=20261124" poster="./static/images/tac2pix-ablation-dynamic-saliency-left.jpg" aria-label="Force-aware Tac2Pix: synchronized dynamic saliency" muted playsinline preload="metadata"></video>
                 </div>
               </div>
               <h3>Force-aware Tac2Pix</h3>
@@ -586,7 +586,7 @@
           </div>
           <p class="video-status" data-ablation-status hidden></p>
         </div>
-        <p class="results-note">Selected normal-condition Pick-and-Place rollouts from the left camera. RGB and saliency within each pair are synchronized; each variant follows its own policy trajectory. All clips play at 30 fps.</p>
+        <p class="results-note">The first 12.5 seconds of selected normal-condition Pick-and-Place rollouts, shown from the left camera at 30 fps. Each variant follows its own policy trajectory, with synchronized RGB and saliency within each pair. The white overlay is for visualization.</p>
 
         <div class="ablation-table-block">
           <div class="result-table-wrapper">
